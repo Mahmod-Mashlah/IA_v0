@@ -21,20 +21,6 @@ class WebAuthController extends Controller
             'password' => ['required'],
         ]);
 
-
-        $user = User::get()
-                    ->where('email', $request->email)
-                    ->first()
-                    ;
-        $userID = $user->id ;
-
-
-        $admin = User::get()
-                    ->whereBetween('id',['1', '101'])
-                    ->first()
-                    ;
-        $adminID = $admin->id ;
-
         // Attempt to log in the user
         if (auth()->attempt($credentials )) {
             return redirect('/groups_index.blade');
