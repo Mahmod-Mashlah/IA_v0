@@ -46,7 +46,17 @@ Route::middleware('web-auth')->group(function ()
             Route::get('/groups/add', [GroupController::class, 'create'])->name('groups.add');
             Route::post('/groups/add', [GroupController::class, 'store'])->name('groups.store');
 
-            
+    // Files :
+
+            // index :
+
+            Route::get('/files',[GroupController::class, 'index'] )->name('files');
+
+            // add Group :
+            Route::get('/files/add', [GroupController::class, 'create'])->name('files.add');
+            Route::post('/files/add', [GroupController::class, 'store'])->name('files.store');
+
+
 });
 
 

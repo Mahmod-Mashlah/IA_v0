@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Groups || Index
+    Files || Index
 @endsection {{-- or @stop --}}
 
 @section('css')
@@ -24,11 +24,11 @@
 @endsection
 
 @section('son1')
-    Groups
+    Files
 @endsection
 
 @section('son2')
-    Groups Index
+    Files Index
 @endsection
 
 
@@ -45,7 +45,7 @@
                 </div>  --}}
                     <div class="card">
                         <div class="card-header bg-blue">
-                            <h1 class="card-title  text-white">These are all Groups in this App
+                            <h1 class="card-title  text-white">These are all Files in this App
                             </h1>
                         </div>
 
@@ -66,16 +66,16 @@
 
                                     <tr>
 
-                                    @foreach ($groups as $group)
+                                    @foreach ($files as $file)
                              <tr>
-                             <td> <b> {{ $group->id }} </b></td>
+                             <td> <b> {{ $file->id }} </b></td>
 
                              <td class='text-center' style="font-size: 23px;"><span
-                                 class="badge text-black disabled color-palette">{{ $group->name }}</span></td>
+                                 class="badge text-black disabled color-palette">{{ $file->name }}</span></td>
                                  <td class='text-center' style="font-size: 23px;"><span
                                      class="badge text-dark  disabled color-palette ">
-                                     {{-- <a href={{ url( $group->email , []) }} target="_plank"></a> --}}
-                                     {{ $group->admin_id }}</span></td>
+                                     {{-- <a href={{ url( $file->email , []) }} target="_plank"></a> --}}
+                                     {{ $file->admin_id }}</span></td>
                                      <td class='text-center' style="font-size: 23px;">
                                          <span
                                          class="badge bg-white disabled color-palette">
@@ -83,7 +83,7 @@
                                         {{-- ***************************************************************************************************************** --}}
 
                                         <form
-                                         action="{{ url('/groups/add', []) }}"
+                                         action="{{ url('/files/add', []) }}"
                                           method="POST">
                                             @csrf
 
@@ -100,18 +100,18 @@
 
 
                           {{-- ******************************************************************************** --}}
-                          {{-- <form method="POST" action="{{ route('group.role.update', $group->id) }}">
+                          {{-- <form method="POST" action="{{ route('file.role.update', $file->id) }}">
                             @csrf
                             @method('POST') --}}
 
                             <form
-                                         action="{{ url('/groups/add', []) }}"
+                                         action="{{ url('/files/add', []) }}"
                                           method="POST">
                                             @csrf
 
                                           <!-- /.card-body -->
 
-                                         <a href="/groups/add" class="btn btn-success" type="button">Add Group</a>
+                                         <a href="/files/add" class="btn btn-success" type="button">Add File</a>
                                         </span>
 
                                             </form>
@@ -123,11 +123,11 @@
 
                                 </tbody>
                                 {{-- <tbody>
-                        @foreach ($groups as $group)
+                        @foreach ($files as $file)
                         <tr>
-                            <td>{{ $group->name }}</td>
-                            <td>{{ $group->email }}</td>
-                            <!-- Add more table cells with group data if needed -->
+                            <td>{{ $file->name }}</td>
+                            <td>{{ $file->email }}</td>
+                            <!-- Add more table cells with file data if needed -->
                         </tr>
                         @endforeach
                     </tbody> --}}
