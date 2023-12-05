@@ -104,9 +104,18 @@
                             @csrf
                             @method('POST') --}}
 
-                            <button type="submit" class="btn btn-primary">Add Group</button>
-                            <a href="{{ url('/groups/add', []) }}" class="nav-link ">
-                        </form>
+                            <form
+                                         action="{{ url('/groups/add', []) }}"
+                                          method="POST">
+                                            @csrf
+
+                                          <!-- /.card-body -->
+
+                                         <a href="/groups/add" class="btn btn-primary" type="button">Add Group</a>
+                                        </span>
+
+                                            </form>
+
                         {{-- ******************************************************************************** --}}
 
                                 </tr>
