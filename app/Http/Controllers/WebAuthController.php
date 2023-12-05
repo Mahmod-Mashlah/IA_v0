@@ -21,9 +21,10 @@ class WebAuthController extends Controller
             'password' => ['required'],
         ]);
 
+
         // Attempt to log in the user
         if (auth()->attempt($credentials )) {
-            return redirect('/groups_index.blade');
+            return redirect()->route('groups');
 
         }
 

@@ -1,7 +1,7 @@
-@extends('web.layouts.master')
+@extends('layouts.master')
 
 @section('title')
-    Plans || All Plans
+    Groups || Index
 @endsection {{-- or @stop --}}
 
 @section('css')
@@ -24,11 +24,11 @@
 @endsection
 
 @section('son1')
-    Plans
+    Groups
 @endsection
 
 @section('son2')
-    All Plans
+    Groups Index
 @endsection
 
 
@@ -43,40 +43,10 @@
                       <h1>Buttons</h1>
                     </div>
                 </div>  --}}
-
-                    {{-- First Table --}}
-
-                    {{-- @if(session('success'))
-                            <script>
-
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: 'success',
-                                    title: 'A new Plan has been created Successfully',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                })
-                            </script>
-                            @endif --}}
-
                     <div class="card">
                         <div class="card-header bg-blue">
-                            <h1 class="card-title  text-white">These are all Plans in this Center
+                            <h1 class="card-title  text-white">These are all Groups in this App
                             </h1>
-                            <div class="card-tools">
-
-
-                                <button type="button" class="btn btn-tool" data-card-widget="maximize">
-                                  <i class="fas fa-expand"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                  <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                  <i class="fas fa-times"></i>
-                                </button>
-                              </div>
-                              <!-- /.card-tools -->
                         </div>
 
                         <!-- /.card-header -->
@@ -85,199 +55,84 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 1%"><b>#</b></th>
-                                        <th style="width: 10%">Start Date </th>
-                                        {{-- <th style="width: 10%" >Edit Plan </th> --}}
-                                        <th style="width: 10%">Opens at</th>
-                                        <th class='middle' style="width: 10%">Closes at</th>
-                                        <th class='text-center' style="width: 10%">Min Lectures</th>
-                                        <th class='text-center' style="width: 10%">Max Lectures</th>
-                                        <th class='text-center' style="width: 10%">Min Activities</th>
-                                        <th class='text-center' style="width: 10%">Max Activities</th>
-                                        <th class='text-center' style="width: 10%">Min Plays </th>
-                                        <th class='text-center' style="width: 10%">Max Plays </th>
+                                        <th class='text-center'style="width: 10%">Name </th>
+                                        {{-- <th style="width: 10%" >Edit Employee </th> --}}
+                                        <th class='text-center'style="width: 10%">Admin Id</th>
+                                        <th class='text-center'style="width: 10%">Go To group Details</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-{{--
+
                                     <tr>
-                                        <td><b>1</b></td>
 
-                                        <td style="font-size: 20px;"><i> 10/4/2023
-                                            </i></td>
-                        <td class='text-center' style="font-size: 18px;">
-                        <button type="button" class="btn btn-primary btn-block"> Edit</button>
-                        </td>
-                                        <td class='text-center' style="font-size: 18px;">8:00</td>
-                                        <td class='text-center' style="font-size: 18px;">14:00</td>
-                                        <td class='text-center' style="font-size: 20px;"><span
-                                                class="badge bg-olive disabled color-palette">5</span></td>
-                                        <td class='text-center' style="font-size: 20px;"><span
-                                                class="badge bg-warning disabled color-palette">23</span></td>
-                                        <td class='text-center' style="font-size: 20px;"><span
-                                                class="badge bg-olive disabled color-palette">7</span></td>
-                                        <td class='text-center' style="font-size: 20px;"><span
-                                                class="badge bg-warning disabled color-palette">29</span></td>
-                                        <td class='text-center' style="font-size: 20px;"><span
-                                                class="badge bg-olive disabled color-palette">6</span></td>
-                                        <td class='text-center' style="font-size: 20px;"><span
-                                                class="badge bg-warning disabled color-palette">19</span></td>
-                                    </tr> --}}
+                                    @foreach ($groups as $group)
+                             <tr>
+                             <td> <b> {{ $group->id }} </b></td>
 
-                            @foreach ($plans as $plan)
-                                <tr>
-                                <td> <b> {{ $plan->id }} </b></td>
-                                <td style="font-size: 20px;"> <i>
-                                {{ Carbon\Carbon::parse($plan->date)->format('j/n/Y') }}
-                                 </i></td>
-                                <td class='text-center' style="font-size: 18px;">
-                                {{ Carbon\Carbon::parse($plan->start_time)->format('g:i a') }}
-                                </td>
-                                <td class='text-center' style="font-size: 18px;">
-                                {{ Carbon\Carbon::parse($plan->end_time)->format('g:i a') }}
-                                </td>
-                                <td class='text-center' style="font-size: 23px;"><span
-                                    class="badge text-olive disabled color-palette">{{ $plan->min_lectures }}</span></td>
-                                    <td class='text-center' style="font-size: 23px;"><span
-                                        class="badge text-maroon disabled color-palette">{{ $plan->max_lectures }}</span></td>
-                                        <td class='text-center' style="font-size: 23px;"><span
-                                            class="badge text-olive disabled color-palette">{{ $plan->min_activities }}</span></td>
-                                            <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-maroon disabled color-palette"> {{ $plan->max_activities }} </span></td>
-                                <td class='text-center' style="font-size: 23px;"><span
-                                    class="badge text-olive disabled color-palette">{{ $plan->min_plays }}</span></td>
-                                <td class='text-center' style="font-size: 23px;"><span
-                                    class="badge text-maroon disabled color-palette">{{ $plan->max_plays }}</span></td>
-                                    {{-- <td class='text-center' style="font-size: 18px;">
-                               <button type="button" class="btn btn-primary btn-block"> Edit</button>
-                               </td> --}}
+                             <td class='text-center' style="font-size: 23px;"><span
+                                 class="badge text-black disabled color-palette">{{ $group->name }}</span></td>
+                                 <td class='text-center' style="font-size: 23px;"><span
+                                     class="badge text-dark  disabled color-palette ">
+                                     {{-- <a href={{ url( $group->email , []) }} target="_plank"></a> --}}
+                                     {{ $group->admin_id }}</span></td>
+                                     <td class='text-center' style="font-size: 23px;">
+                                         <span
+                                         class="badge bg-white disabled color-palette">
+
+                                        {{-- ***************************************************************************************************************** --}}
+
+                                        <form
+                                         action="{{ url('/groups/add', []) }}"
+                                          method="POST">
+                                            @csrf
+
+                                          <!-- /.card-body -->
+
+                                         <a href="/groups/add" class="btn btn-primary" type="button">View Group</a>
+                                        </span>
+
+                                            </form>
+
+
+                             </tr>
+                          @endforeach
+
+
+                          {{-- ******************************************************************************** --}}
+                          {{-- <form method="POST" action="{{ route('group.role.update', $group->id) }}">
+                            @csrf
+                            @method('POST') --}}
+
+                            <button type="submit" class="btn btn-primary">Add Group</button>
+                            <a href="{{ url('/groups/add', []) }}" class="nav-link ">
+                        </form>
+                        {{-- ******************************************************************************** --}}
+
                                 </tr>
-                            @endforeach
-                                    </tbody>
 
-                                <tfoot>
-                                    {{-- <tr>
-                            <th style="width: 1%"><b> #</b></th>
-                            <th style="width: 19%" >Start Date </th>
-                            <th style="width: 10%" >Opens at</th>
-                            <th style="width: 10%" >Closes at</th>
-                            <th class='text-center' style="width: 10%">Min Plays </th>
-                            <th class='text-center' style="width: 10%">MaxPlays </th>
-                            <th class='text-center' style="width: 10%" >Min Activities</th>
-                            <th class='text-center' style="width: 10%" >Max Activities</th>
-                            <th class='text-center' style="width: 10%" >Min Lectures</th>
-                            <th class='text-center' style="width: 10%" >Max Lectures</th>
-                          </tr> --}}
-                                </tfoot>
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                    {{-- End of First Table  --}}
-
-                    {{-- Second Table --}}
-                    <div class="card">
-                        <div class="card-header bg-blue">
-                            <h1 class="card-title  text-white">Available Plays And Lectures Types For each plan
-                            </h1>
-                            <div class="card-tools">
-
-
-                                <button type="button" class="btn btn-tool" data-card-widget="maximize">
-                                  <i class="fas fa-expand"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                  <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                  <i class="fas fa-times"></i>
-                                </button>
-                              </div>
-                              <!-- /.card-tools -->
-                        </div>
-
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="table2" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 1%"><b>#</b></th>
-                                        <th style="width: 11%" class='text-center'>Start Date </th>
-                                        {{-- <th style="width: 10%" >Edit Plan </th> --}}
-
-                                        <th class='text-center' style="width: 44%">Minimum Available Lecturess Types</th>
-                                        <th class='text-center' style="width: 44%">Minimum Available Plays Types</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-
-                                @foreach ($plans as $plan)
-                                    <tr>
-                                    <td> <b> {{ $plan->id }} </b></td>
-                                    <td style="font-size: 23px;" class='text-center'> <i>
-                                    {{ Carbon\Carbon::parse($plan->date)->format('j/n/Y') }} {{-- ->format('J/n/Y') --}}
-
-                                    <br>
-
-                                {{-- @if ($plan->date->isFirstOfMonth()) --}}
-                                @php
-                                    $now = new DateTime();  // Current date and time
-                                    $futureDate = new DateTime();  // Create a new DateTime object
-                                    $futureDate->modify('+1 month');  // Add 1 month to the current date
-                                    // Get the first day of the next month from now
-
-                                    $now = new DateTime(); // Get the current date
-                                    $firstDayNextMonth = new DateTime('first day of next month'); // first day of next month
-
-                                @endphp
-                                        @if (Carbon\Carbon::parse($plan->date) > Carbon\Carbon::parse($firstDayNextMonth) ) {{-- ->isAfter($futureDate) --}}
-                                        <a href="/web/plans/{{ $plan->id }}/edit" class="btn btn-primary" type="button">Edit</a>
-                                        @endif
-                                {{-- @endif --}}
-                                    </i></td>
-
-                                    <td class='text-center' style="font-size: 23px;"><span
-                                        class="badge text-olive disabled color-palette">
-                                        @foreach ($plan->type_lectures->unique('type')->sortBy('type') as $lecture)
-                                            {{ $lecture->type }},
-                                        @endforeach
-                                    </span></td>
-
-                                    <td class='text-center' style="font-size: 23px;"><span
-                                        class="badge text-pink disabled color-palette">
-                                        @foreach ($plan->type_plays->unique('type') as $play)
-                                            {{ $play->type }},
-                                        @endforeach
-                                    </span></td>
-
-                                    </tr>
-                            @endforeach
 
                                 </tbody>
-
+                                {{-- <tbody>
+                        @foreach ($groups as $group)
+                        <tr>
+                            <td>{{ $group->name }}</td>
+                            <td>{{ $group->email }}</td>
+                            <!-- Add more table cells with group data if needed -->
+                        </tr>
+                        @endforeach
+                    </tbody> --}}
                                 <tfoot>
-                                    {{-- <tr>
-                            <th style="width: 1%"><b> #</b></th>
-                            <th style="width: 19%" >Start Date </th>
-                            <th style="width: 10%" >Opens at</th>
-                            <th style="width: 10%" >Closes at</th>
-                            <th class='text-center' style="width: 10%">Min Plays </th>
-                            <th class='text-center' style="width: 10%">MaxPlays </th>
-                            <th class='text-center' style="width: 10%" >Min Activities</th>
-                            <th class='text-center' style="width: 10%" >Max Activities</th>
-                            <th class='text-center' style="width: 10%" >Min Lectures</th>
-                            <th class='text-center' style="width: 10%" >Max Lectures</th>
-                          </tr> --}}
+
                                 </tfoot>
                             </table>
                         </div>
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                    {{-- End of Econd Table  --}}
 
-
+                </div>
+                <!-- /.col -->
             </div>
             <!-- /.row -->
         </div>
@@ -311,7 +166,6 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ URL::asset('assets/js/demo.js') }}"></script>
     <!-- Page specific script -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function() {
             $("#example1").DataTable({
@@ -320,24 +174,7 @@
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $().DataTable({
-                "paging": false,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": true,
-                "responsive": true,
-            });
-        });
-        $(function() {
-            $("#table2").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#table2_wrapper .col-md-6:eq(0)');
-            $().DataTable({
+            $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -345,10 +182,7 @@
                 "info": true,
                 "autoWidth": true,
                 "responsive": true,
-                // "bDestroy": true
             });
         });
-
-
     </script>
 @endsection

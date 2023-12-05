@@ -1,5 +1,5 @@
 
-@extends('web.layouts.master')
+@extends('layouts.master')
 
 @section('title')
     Plans || Update Plan #{{ $plan->id }}

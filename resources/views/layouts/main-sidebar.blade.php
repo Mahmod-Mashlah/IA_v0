@@ -3,8 +3,8 @@
     <!-- Brand Logo -->
     <a href="{{ url('./', []) }}" class="brand-link">
       {{-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
-      <img src="{{ asset('assets/img/culture-center-logo.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Cultural Center App</span>
+      <img src="{{ asset('assets/img/culture-center-logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">SOURCE SAFE</span>
     </a>
 
     <!-- Sidebar -->
@@ -34,62 +34,28 @@
                 <a href="#" target="_blank" class="nav-link active">
                   <i class="nav-icon fas fa-th"></i>
                   <p>
-                    Plans Management
+                    Groups
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                      <a href="{{ url('./web/plans', []) }}" target="_blank" class="nav-link ">
+                      <a href="{{ url('./groups', []) }}" target="_blank" class="nav-link ">
                       <i class="far fa fa-indent nav-icon"></i>
-                      <p>Show All Plans </p>
+                      <p>Show All Groups </p>
                       </a>
                   </li>
-                  <li class="nav-item">
-                    <a href="{{ url('/web/plans/add', []) }}" class="nav-link ">
-                      <i class="far fa fa-plus-square nav-icon"></i>
-                      <p>Add a Plan</p>
-                    </a>
-                  </li>
+
                   {{-- <li class="nav-item">
-                    <a href="{{ url('/web/plans/update', []) }}" class="nav-link">
+                    <a href="{{ url('/groups/update', []) }}" class="nav-link">
                       <i class="far fa fa-edit nav-icon" aria-hidden="true"></i>
-                      <p>Update a Plan</p>
+                      <p>Update a Group</p>
                     </a>
                   </li> --}}
 
                 </ul>
               </li>
 
-              <li class="nav-item menu-open">
-                <a href="#" target="_blank" class="nav-link active">
-                  <i class="nav-icon fas  fa fa-male "></i>
-                  <p>
-                    Manage Employees
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ url('./web/employees', []) }}" class="nav-link ">
-                        <i class="far fa fa-indent nav-icon"></i>
-                        <p>Show All Employees </p>
-                        </a>
-                    </li>
-
-                    {{-- <li class="nav-item">
-                        <a href="{{ url('/web/employees/add', []) }}" class="nav-link ">
-                          <i class="far fa fa-plus-square nav-icon"></i>
-                          <p>Add an Employee</p>
-                        </a>
-                      </li> --}}
-
-                  <li class="nav-item">
-                    <a href="{{ url('/web/employees/edit-permissions', []) }}" class="nav-link">
-                      <i class="far fa fa-wrench nav-icon"></i>
-                     <p> Users & Permissions </p>
-                    </a>
-                  </li>
 
                 </ul>
               </li>

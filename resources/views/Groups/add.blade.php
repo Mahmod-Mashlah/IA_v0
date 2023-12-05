@@ -1,4 +1,4 @@
-@extends('web.layouts.master')
+@extends('layouts.master')
 
 @section('title')
     Plans || Add New Plan

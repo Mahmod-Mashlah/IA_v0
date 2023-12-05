@@ -55,61 +55,6 @@ class GroupController extends Controller
         // return redirect()->route('groups')->with('success', 'A new Group has created successfully!');
         return redirect()->route('groups',compact(['group','validatedData']))->with('success', 'A new Group has created successfully!');
     }
-
-    public function test_store(StoreGroupRequest $request)
-    {
-        // //
-        // // // Validate the input
-        // // $validatedData = $request->validate([
-        // //     'field1' => 'required',
-        // //     'field2' => 'required',
-        // //     // Add validation rules for other fields
-        // // ]);
-
-        // // // Create a new record
-        // // Group::create($validatedData);
-
-        // $group = new Group();
-        // // inputs :
-
-        // $group = Group::create($request->all());
-        // $lecturesFromRequest = $request->input('lectures', []);
-        // foreach ($lecturesFromRequest as $lecture_Item) {
-        //     // Save $lectures to the database
-        //     // $lecture=TypeLecture::find($lecture->id);
-        //     // $lecture=$group->type_lectures;
-        //     // $lecture=$lecture_Item;
-        //     // $group->type_lectures = $lecture_Item;
-
-        //     // $lecture_Item->save();
-        // }
-
-        // // Or :
-        // // $group->date = $request->input('date');
-        // // $group->start_time = $request->input('start_time');
-        // // $group->end_time = $request->input('end_time');
-        // // $group->min_lectures = $request->input('min_lectures');
-        // // $group->max_lectures = $request->input('max_lectures');
-        // // $group->min_activities = $request->input('min_activities');
-        // // $group->max_activities = $request->input('max_activities');
-        // // $group->min_plays = $request->input('min_plays');
-        // // $group->max_plays = $request->input('max_plays');
-
-        // //Relations :
-
-        // // $group->type_plays = $request->input('name');
-        // // $group->type_lectures = $request->input('name');
-
-        // $group->type_lectures()->attach($request->input('type_lectures'));
-        // $group->type_plays()->attach($request->input('type_plays'));
-
-        // $group->save();
-        // // Redirect or return a response
-        // Alert::success('Done !', 'a new group has been created Successfully');
-
-        // return redirect()->route('groups')->with('success', 'A new Group has created successfully!');
-    }
-
     public function edit(Group $group)
     {
         $group = Group::find($group->id);

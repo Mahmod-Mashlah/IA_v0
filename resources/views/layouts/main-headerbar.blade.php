@@ -4,22 +4,8 @@
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ url('./', []) }}" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ url('./web/plans', []) }}" target="_blank" class="nav-link">Plans</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ url('./web/employees', []) }}" target="_blank" class="nav-link">
-                Employees
-            </a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ url('./web/employees/edit-permissions', []) }}" target="_blank" class="nav-link">Users &
-                Permissions</a>
-        </li>
+
+
 
     </ul>
 

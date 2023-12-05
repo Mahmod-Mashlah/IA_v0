@@ -15,9 +15,7 @@ use App\Http\Controllers\WebAuthController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 // Public Routes :
 
@@ -29,13 +27,14 @@ Route::post('/login', [WebAuthController::class, 'processLogin'])->name('login')
 
 
 Route::get('/g', function () {
-    return view('groups_index');
+    return view('Groups.index');
 });
 
 // Private Routes :
 
 Route::middleware('web-auth')->group(function ()
 {
+
 
     // Groups :
 

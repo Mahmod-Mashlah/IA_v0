@@ -34,12 +34,12 @@ class DatabaseSeeder extends Seeder
             ]);
            }
 
-        // 100 users factory
+        // 100 Groups factory
         for ($i=1; $i <= 8 ; $i++) {
             $j = ($i *2)+3;
             Group::factory()->create([
 
-                'admin_id'=> 'a'."$j",
+                'admin_id'=> $j,
                 'name'=> 'Group'."$i",
 
             ]);

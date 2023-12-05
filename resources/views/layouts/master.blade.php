@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@include('web.layouts.head')
+@include('layouts.head')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -13,14 +13,14 @@
   <div class="preloader flex-column justify-content-center align-items-center">
     {{-- <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60"> --}}
     <img class="animation__shake img-thumbnail brand-image img-circle "
-    src="{{ asset('assets/img/culture-center-logo.jpg') }}" alt="AdminLTELogo" width='150px' height= '100px' style="opacity: .8"  border-radius= '0.50rem'>
+    src="{{ asset('assets/img/culture-center-logo.png') }}" alt="AdminLTELogo" width='150px' height= '100px' style="opacity: .8"  border-radius= '0.50rem'>
 
 
 </div>
 
-@include('web.layouts.main-headerbar')
+@include('layouts.main-headerbar')
 
-@include('web.layouts.main-sidebar')
+@include('layouts.main-sidebar')
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -49,7 +49,7 @@
 
 
 
-  @include('web.layouts.footer')
+  @include('layouts.footer')
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -59,7 +59,7 @@
 </div>
 <!-- ./wrapper -->
 
-@include('web.layouts.footer-scripts')
+@include('layouts.footer-scripts')
 @include('sweetalert::alert')
 </body>
 </html>
