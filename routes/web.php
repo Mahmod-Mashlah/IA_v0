@@ -27,18 +27,19 @@ Route::get('/login', [WebAuthController::class, 'showLoginForm']);
 Route::post('/login', [WebAuthController::class, 'processLogin'])->name('login');
 
 
+Route::get('/g', function () {
+    return view('groups_index');
+});
+
 // Private Routes :
 
-// Route::middleware('web-auth')->group(function ()
-// {
-//     // index :
-//     Route::get('/groups', [EmployeeController::class, 'index'])->name('employees');
+Route::middleware('web-auth')->group(function ()
+{
+    // Groups :
+    Route::get('/groups', [EmployeeController::class, 'index'])->name('employees');
 
-//     Route::prefix('groups')->group(function (){
-//         Route::get('/',[GroupController::class,'index']);
 
-//     });
-// });
+});
 
 
 

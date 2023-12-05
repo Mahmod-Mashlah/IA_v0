@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('groups_users', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('group_id')->references('id')->on('groups');
             $table->timestamps();
         });
     }

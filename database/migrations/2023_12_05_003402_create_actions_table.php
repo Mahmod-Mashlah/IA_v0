@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('actions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('file_id')->references('id')->on('files');
+            $table->string('action');
             $table->timestamps();
         });
     }

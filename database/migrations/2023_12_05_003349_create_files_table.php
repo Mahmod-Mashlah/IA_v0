@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('status')->default('free');
+            $table->foreignId('group_id')->references('id')->on('groups');
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->string('file');
+            // $table->unsignedInteger('modify')->default(0);
             $table->timestamps();
         });
     }
