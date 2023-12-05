@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\WebAuthController;
 
 /*
@@ -35,8 +36,24 @@ Route::get('/g', function () {
 
 Route::middleware('web-auth')->group(function ()
 {
+
     // Groups :
-    Route::get('/groups', [EmployeeController::class, 'index'])->name('employees');
+
+            // index :
+
+            Route::get('/groups',[GroupController::class, 'index'] )->name('groups');
+
+            // add Group :
+            Route::get('/groups/add', [GroupController::class, 'create'])->name('groups.add');
+            Route::post('/groups/add', [GroupController::class, 'store'])->name('groups.store');
+
+            // update Group :
+            // Route::get('/groups/update', [GroupController::class, 'edit'])->name('groups.edit');
+            // Route::post('/groups/update', [GroupController::class, 'update'])->name('groups.update');
+            // Route::put('/groups/update/{id}', [GroupController::class, 'update'])->name('groups.update');
+            Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])->name('groups.edit');
+            Route::put('/groups/{group}', [GroupController::class, 'update'])->name('groups.update');
+
 
 
 });
