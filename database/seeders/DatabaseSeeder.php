@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             ]);
            }
 
-        // 100 Groups factory
+        // 8 Groups factory
         for ($i=1; $i <= 8 ; $i++) {
             $j = ($i *2)+3;
             Group::factory()->create([
@@ -44,5 +44,21 @@ class DatabaseSeeder extends Seeder
 
             ]);
            }
+
+           // 16 Files factory
+        // for ($i=1; $i <= 16 ; $i++) {
+
+        //     Group::factory()->create([
+
+        //         'name'   => 'file'."$i",
+        //         // 'status'   => 'free',
+        //         'user_id'   => $i,
+        //         'group_id'   => $i+1,
+        //         'file'   => 'any',
+
+        //     ]);
+        //    }
+
+
     }
 }
