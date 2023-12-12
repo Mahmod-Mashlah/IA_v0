@@ -40,11 +40,34 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                      <a href="{{ url('./groups', []) }}" target="_blank" class="nav-link ">
+                      <a href="{{ url('./groups', []) }}" class="nav-link ">
                       <i class="far fa fa-indent nav-icon"></i>
                       <p>Show All Groups </p>
                       </a>
                   </li>
+
+               <li class="nav-item menu-open">
+                <a href="#"  class="nav-link active">
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>
+                    Files
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                      <a href="{{ url('./files/', []) }}" class="nav-link ">
+                      <i class="far fa fa-indent nav-icon"></i>
+                      <p>Show Files</p>
+                      </a>
+                  </li>
+                  {{-- <li class="nav-item">
+                      <a href="{{ url('./files/add', []) }}" target="_blank" class="nav-link ">
+                      <i class="far fa fa-indent nav-icon"></i>
+                      <p>Add File</p>
+                      </a>
+                  </li> --}}
+
 
                   {{-- <li class="nav-item">
                     <a href="{{ url('/groups/update', []) }}" class="nav-link">

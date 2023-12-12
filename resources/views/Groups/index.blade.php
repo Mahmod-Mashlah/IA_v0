@@ -28,7 +28,7 @@
 @endsection
 
 @section('son2')
-    Groups Index
+    Groups
 @endsection
 
 

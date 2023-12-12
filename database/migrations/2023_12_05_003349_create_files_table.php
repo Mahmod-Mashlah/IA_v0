@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('status')->default('free');
-            $table->foreignId('group_id')->references('id')->on('groups');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('file');
             // $table->unsignedInteger('modify')->default(0);
             $table->timestamps();

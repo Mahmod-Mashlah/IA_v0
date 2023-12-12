@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\WebAuthController;
 
@@ -26,10 +27,6 @@ Route::get('/login', [WebAuthController::class, 'showLoginForm']);
 Route::post('/login', [WebAuthController::class, 'processLogin'])->name('login');
 
 
-Route::get('/g', function () {
-    return view('Groups.index');
-});
-
 // Private Routes :
 
 Route::middleware('web-auth')->group(function ()
@@ -50,12 +47,16 @@ Route::middleware('web-auth')->group(function ()
 
             // index :
 
-            Route::get('/files',[GroupController::class, 'index'] )->name('files');
+            Route::get('/files',[FileController::class, 'index'] )->name('files');
 
-            // add Group :
-            Route::get('/files/add', [GroupController::class, 'create'])->name('files.add');
-            Route::post('/files/add', [GroupController::class, 'store'])->name('files.store');
+          // add File :
+          Route::get('/files/add', [FileController::class, 'create'])->name('files.add');
+          Route::post('/files/add', [FileController::class, 'store'])->name('files.store');
+          // Download
+          Route::get('/files/download/{filename}', [FileController::class, 'download'])->name('files.download');
 
+          Route::get('files/{plan}/edit', [FileController::class, 'edit'])->name('plans.edit');
+          Route::put('files/{plan}', [FileController::class, 'update'])->name('plans.update');
 
 });
 

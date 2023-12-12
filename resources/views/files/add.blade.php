@@ -52,7 +52,7 @@
                             <!-- /.card-header -->
                             <!-- form start -->
 
-                            <form method="Post" action="/files/add">
+                            <form method="Post" action="/files/add" enctype="multipart/form-data">
                                 @csrf
                                 @method('Post')
                                 <div class="card-body">
@@ -62,8 +62,15 @@
                                         {{-- // <label for="email">Email:</label>
                                     // <input type="email" name="email" id="email" required><br> --}}
                                         {{-- {{ $errors }} --}}
-                                        <label for="name">File Name</label>
+                                        {{-- <label for="name">File Name</label>
                                         <input id="name" class="form-control bg- light" type="text" name="name"
+                                            required /> --}}
+                                        <label for="group">Group ID</label>
+                                        <input id="group" class="form-control bg- light" type="text" name="group"
+                                            required />
+
+                                        <label for="file">file</label>
+                                        <input id="file" class="form-control bg- light" type="file" name="file"
                                             required />
 
                                     </div>
