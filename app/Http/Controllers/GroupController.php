@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreGroupRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\UpdateGroupRequest;
@@ -14,7 +15,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::all();
+        $groups = Group::all()/*->where('group_id',Auth::user()->id)*/ ;
+
         return view('groups.index', compact([
             'groups',
         ]));
