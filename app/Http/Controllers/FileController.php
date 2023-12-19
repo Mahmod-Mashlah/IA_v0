@@ -93,6 +93,27 @@ class FileController extends Controller
 
     public function store(StoreFileRequest $request)
 {
+    $fileModel = new File;
+
+    $name = $request->file('file')->getClientOriginalName();
+    $path = $request->file('file')->storeAs('uploads', $name, 'public');
+
+    $fileModel->name = $name;
+    $fileModel->status = 'free';
+    $fileModel->user_id = auth()->user()->id;
+    $fileModel->group_id = $request->group_id;
+    $fileModel->file = '/storage/' . $path;
+
+    $fileModel->save();
+
+     return redirect()->route('files')
+        ->with('success', 'File has been uploaded.')
+        ->with('file', $fileModel);
+
+
+}
+    public function store0(StoreFileRequest $request)
+{
     if ($request->hasFile('file')) {
         $file = $request->file('file');
 
@@ -120,10 +141,18 @@ class FileController extends Controller
 }
 
 
-    public function download()
+    public function download(Request $request)
     {
 
 
+        $file = File::find($request->file_id);
+
+    if (auth()->user()->id !== $file->user_id) {
+        abort(403);
+    }
+    $file->status = 'reserved';
+
+    return response()->download(storage_path('app/public/' . $file->file));
 
         // $file = public_path('files/project1.docx');
         // return response()->download($file);
@@ -136,6 +165,18 @@ class FileController extends Controller
         // return response()->download(public_path('assets/files/'.$file));
         // return Storage::download('assets/files/'.$id);
 
+    }
+
+    public function getdownload($filename)
+    {
+        // Check if the file exists in the storage/app/public/uploads directory
+        if (Storage::disk('public')->exists('uploads/' . $filename)) {
+            // Return the file as a download response
+            return Storage::disk('public')->download('uploads' . $filename);
+        } else {
+            // Return a 404 error if the file does not exist
+            return abort(404);
+        }
     }
 
 

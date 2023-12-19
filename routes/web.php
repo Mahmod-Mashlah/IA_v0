@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\GroupController;
@@ -53,7 +55,20 @@ Route::middleware('web-auth')->group(function ()
           Route::get('/files/add', [FileController::class, 'create'])->name('files.add');
           Route::post('/files/add', [FileController::class, 'store'])->name('files.store');
           // Download
-          Route::get('/files/download/{filename}', [FileController::class, 'download'])->name('files.download');
+        //   Route::post('download', [FileController::class, 'download'])->name('download');
+
+        Route::get('/download/{filename}', [FileController::class, 'getdownload']);
+
+
+        Route::post('/download', function (Request $request) {
+            $file = File::find($request->file_id);
+
+            if (auth()->user()->id !== $file->user_id) {
+                abort(403);
+            }
+
+            return response()->download(storage_path('app/public/' . $file->path));
+        });
 
           Route::get('files/{plan}/edit', [FileController::class, 'edit'])->name('plans.edit');
           Route::put('files/{plan}', [FileController::class, 'update'])->name('plans.update');

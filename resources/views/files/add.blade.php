@@ -65,8 +65,9 @@
                                         {{-- <label for="name">File Name</label>
                                         <input id="name" class="form-control bg- light" type="text" name="name"
                                             required /> --}}
-                                        <label for="group">Group ID</label>
-                                        <input id="group" class="form-control bg- light" type="text" name="group"
+                                        <label for="group_id">Group ID</label>
+
+                                        <input id="group_id" class="form-control bg- light" type="text" name="group_id"
                                             required />
 
                                         <label for="file">file</label>

@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        // 100 users factory
-        for ($i=1; $i <= 100 ; $i++) {
+        // 25 users factory
+        for ($i=1; $i <= 25 ; $i++) {
             User::factory()->create([
                 'name' => 'a'."$i",
                 'email' => 'a'."$i".'@gmail.com',
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
            }
 
         // 8 Groups factory
-        for ($i=1; $i <= 8 ; $i++) {
+        for ($i=1; $i <= 5 ; $i++) {
             $j = ($i *2)+3;
             Group::factory()->create([
 
