@@ -98,6 +98,7 @@ Files Index
                                             {{-- <a href="{{ route('download') }}" class="btn btn-info" type="button">download</a> --}}
                                             <form action="/download" method="post">
                                                 @csrf
+                                                {{-- @method('Get') --}}
                                                 <input type="hidden" name="file_id" value="{{ $file->id }}">
                                                 <button type="submit" class="btn btn-info">download</button>
                                             </form>

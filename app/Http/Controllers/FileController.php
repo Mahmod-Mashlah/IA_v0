@@ -152,7 +152,7 @@ class FileController extends Controller
     }
     $file->status = 'reserved';
 
-    return response()->download(storage_path('app/public/' . $file->file));
+    return response()->download(storage_path('app/public/uploads' . $file->file));
 
         // $file = public_path('files/project1.docx');
         // return response()->download($file);
@@ -170,10 +170,11 @@ class FileController extends Controller
     public function getdownload($filename)
     {
         // Check if the file exists in the storage/app/public/uploads directory
-        if (Storage::disk('public')->exists('uploads/' . $filename)) {
+        if (Storage::disk('public')->exists('uploads' . $filename)) {
             // Return the file as a download response
             return Storage::disk('public')->download('uploads' . $filename);
-        } else {
+        }
+        else {
             // Return a 404 error if the file does not exist
             return abort(404);
         }
