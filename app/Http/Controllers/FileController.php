@@ -180,6 +180,27 @@ class FileController extends Controller
         }
     }
 
+    public function upload_file(Request $request) {
+
+        $file_extension = $request->file->getClientOriginalName() ;
+        $filename = time() . '.' . $file_extension ;
+
+        $request->file->move('filles',$filename);
+
+        File::create([
+            'name' => $filename ,
+            'status' => 'free',
+            'group_id' => $request->group_id ,
+            'file' => 'any path' ,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        $files = File::all();
+
+        return view('files.index', compact(['files']));
+
+    }
+
 
     public function destroy(File $file)
     {

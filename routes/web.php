@@ -53,7 +53,7 @@ Route::middleware('web-auth')->group(function ()
 
           // add File :
           Route::get('/files/add', [FileController::class, 'create'])->name('files.add');
-          Route::post('/files/add', [FileController::class, 'store'])->name('files.store');
+        //   Route::post('/files/add', [FileController::class, 'store'])->name('files.store');
           // Download
         //   Route::post('download', [FileController::class, 'download'])->name('download');
 
@@ -70,10 +70,11 @@ Route::middleware('web-auth')->group(function ()
             return response()->download(storage_path('app/public/' . $file->path));
         });
 
-          Route::get('files/{plan}/edit', [FileController::class, 'edit'])->name('plans.edit');
-          Route::put('files/{plan}', [FileController::class, 'update'])->name('plans.update');
-
+        Route::get('files/{plan}/edit', [FileController::class, 'edit'])->name('plans.edit');
+        Route::put('files/{plan}', [FileController::class, 'update'])->name('plans.update');
+        Route::post('upload_file',[FileController::class, 'upload_file']);
 });
+
 
 
 
