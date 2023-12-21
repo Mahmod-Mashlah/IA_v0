@@ -200,6 +200,19 @@ class FileController extends Controller
         return view('files.index', compact(['files']));
 
     }
+    public function downloadfile(Request $request)
+    {
+        $file = File::where('id',$request->file_id)->sharedLock()->first();
+                if($file)
+                {$file_name=$file->name;
+                $path=public_path('filles/'.$file_name);
+            return response()->download($path);
+
+
+
+
+                }
+    }
 
 
     public function destroy(File $file)

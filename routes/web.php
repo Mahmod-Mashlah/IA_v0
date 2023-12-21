@@ -60,7 +60,7 @@ Route::middleware('web-auth')->group(function ()
         Route::get('/download/{filename}', [FileController::class, 'getdownload']);
 
 
-        Route::post('/download', function (Request $request) {
+        /*Route::post('downloadfile', function (Request $request) {
             $file = File::find($request->file_id);
 
             if (auth()->user()->id !== $file->user_id) {
@@ -68,11 +68,14 @@ Route::middleware('web-auth')->group(function ()
             }
 
             return response()->download(storage_path('app/public/' . $file->path));
-        });
+        });*/
+
 
         Route::get('files/{plan}/edit', [FileController::class, 'edit'])->name('plans.edit');
         Route::put('files/{plan}', [FileController::class, 'update'])->name('plans.update');
         Route::post('upload_file',[FileController::class, 'upload_file']);
+        Route::post('downloadfile', [FileController::class, 'downloadfile']);
+
 });
 
 
