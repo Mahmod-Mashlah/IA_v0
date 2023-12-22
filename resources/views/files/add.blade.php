@@ -52,7 +52,6 @@
                             <!-- /.card-header -->
                             <!-- form start -->
 
-                            {{-- <form method="Post" action="/files/add" enctype="multipart/form-data"> --}}
                             <form method="POST" action="{{ url('upload_file') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('Post')
@@ -60,12 +59,7 @@
 
                                     <div class="form-file">
 
-                                        {{-- // <label for="email">Email:</label>
-                                    // <input type="email" name="email" id="email" required><br> --}}
-                                        {{-- {{ $errors }} --}}
-                                        {{-- <label for="name">File Name</label>
-                                        <input id="name" class="form-control bg- light" type="text" name="name"
-                                            required /> --}}
+
                                         <label for="group_id">Group ID</label>
 
                                         <input id="group_id" class="form-control bg- light" type="text" name="group_id"
@@ -123,24 +117,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ URL::asset('assets/js/demo.js') }}"></script>
 
-    <!-- Page specific script -->
-    {{-- <script>
-    $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
-      " light": true,
-      "autoWidth": true,
-      "responsive": true,
-    });
-  });
-</script> --}}
+
     <script>
         // Assuming you have a submit button with ID "submit-btn"
         $('#submit-btn').click(function(e) {

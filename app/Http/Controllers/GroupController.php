@@ -6,7 +6,6 @@ use App\Models\Group;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreGroupRequest;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Http\Requests\UpdateGroupRequest;
 
 class GroupController extends Controller
 {

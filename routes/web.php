@@ -7,18 +7,6 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\WebAuthController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
 
 // Public Routes :
 
@@ -47,34 +35,19 @@ Route::middleware('web-auth')->group(function ()
 
     // Files :
 
-            // index :
+          // index :
 
             Route::get('/files',[FileController::class, 'index'] )->name('files');
 
-          // add File :
-          Route::get('/files/add', [FileController::class, 'create'])->name('files.add');
-        //   Route::post('/files/add', [FileController::class, 'store'])->name('files.store');
-          // Download
-        //   Route::post('download', [FileController::class, 'download'])->name('download');
+          // Add and Upload File  :
 
-        Route::get('/download/{filename}', [FileController::class, 'getdownload']);
+            Route::get('/files/add', [FileController::class, 'create'])->name('files.add');
 
+            Route::post('upload_file',[FileController::class, 'upload_file']);
 
-        /*Route::post('downloadfile', function (Request $request) {
-            $file = File::find($request->file_id);
+          // Download  Files :
 
-            if (auth()->user()->id !== $file->user_id) {
-                abort(403);
-            }
-
-            return response()->download(storage_path('app/public/' . $file->path));
-        });*/
-
-
-        Route::get('files/{plan}/edit', [FileController::class, 'edit'])->name('plans.edit');
-        Route::put('files/{plan}', [FileController::class, 'update'])->name('plans.update');
-        Route::post('upload_file',[FileController::class, 'upload_file']);
-        Route::post('downloadfile', [FileController::class, 'downloadfile']);
+            Route::post('downloadfile', [FileController::class, 'downloadfile']);
 
 });
 
