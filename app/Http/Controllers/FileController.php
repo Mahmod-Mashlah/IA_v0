@@ -183,7 +183,7 @@ class FileController extends Controller
     public function upload_file(Request $request) {
 
         $file_extension = $request->file->getClientOriginalName() ;
-        $filename = time() . '.' . $file_extension ;
+        $filename = $file_extension ;
 
         $request->file->move('filles',$filename);
 
