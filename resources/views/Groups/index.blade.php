@@ -59,6 +59,9 @@
                                         {{-- <th style="width: 10%" >Edit Employee </th> --}}
                                         <th class='text-center'style="width: 10%">Admin Id</th>
                                         <th class='text-center'style="width: 10%">Go To Files</th>
+                                        @if (auth()->user()->id == 1)
+                                        <th class='text-center'style="width: 10%">Users Permissions</th>
+                                        @endif
 
                                     </tr>
                                 </thead>
@@ -66,59 +69,68 @@
 
                                     <tr>
 
-                                    @foreach ($groups as $group)
-                             <tr>
-                             <td> <b> {{ $group->id }} </b></td>
+                                        @foreach ($groups as $group)
+                                    <tr>
+                                        <td> <b> {{ $group->id }} </b></td>
 
-                             <td class='text-center' style="font-size: 23px;"><span
-                                 class="badge text-black disabled color-palette">{{ $group->name }}</span></td>
-                                 <td class='text-center' style="font-size: 23px;"><span
-                                     class="badge text-dark  disabled color-palette ">
-                                     {{-- <a href={{ url( $group->email , []) }} target="_plank"></a> --}}
-                                     {{ $group->admin_id }}</span></td>
-                                     <td class='text-center' style="font-size: 23px;">
-                                         <span
-                                         class="badge bg-white disabled color-palette">
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-black disabled color-palette">{{ $group->name }}</span>
+                                        </td>
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-dark  disabled color-palette ">
+                                                {{-- <a href={{ url( $group->email , []) }} target="_plank"></a> --}}
+                                                {{ $group->admin_id }}</span></td>
+                                        <td class='text-center' style="font-size: 23px;">
+                                            <span class="badge bg-white disabled color-palette">
 
-                                        {{-- ***************************************************************************************************************** --}}
 
-                                        <form
-                                         action="{{ url('/groups/add', []) }}"
-                                          method="POST">
-                                            @csrf
 
-                                          <!-- /.card-body -->
+                                                <form action="{{ url('/groups/add', []) }}" method="POST">
+                                                    @csrf
 
-                                         <a href="/files" class="btn btn-primary" type="button">View Files</a>
-                                        </span>
+                                                    <!-- /.card-body -->
+
+                                                    <a href="/files" class="btn btn-primary" type="button">View Files</a>
+                                            </span>
 
                                             </form>
+                                        </td>
+
+                                        @if (auth()->user()->id == 1)
+
+                                        <td class='text-center' style="font-size: 23px;">
+                                            <span class="badge bg-white disabled color-palette">
+
+                                                    <a href="{{ url('groups/edit-permissions', [$group->id]) }}" class="btn btn-warning" type="button">edit</a>
+                                            </span>
 
 
-                             </tr>
-                          @endforeach
+                                        </td>
+
+                                        @endif
+
+                                    </tr>
+                                    @endforeach
 
 
-                          {{-- ******************************************************************************** --}}
-                          {{-- <form method="POST" action="{{ route('group.role.update', $group->id) }}">
+                                    {{-- ******************************************************************************** --}}
+                                    {{-- <form method="POST" action="{{ route('group.role.update', $group->id) }}">
                             @csrf
                             @method('POST') --}}
 
-                            <form
-                                         action="{{ url('/groups/add', []) }}"
-                                          method="POST">
-                                            @csrf
+                                    <form action="{{ url('/groups/add', []) }}" method="POST">
+                                        @csrf
 
-                                          <!-- /.card-body -->
+                                        <!-- /.card-body -->
 
-                                         <a href="/groups/add" class="btn btn-success" type="button">Add Group</a>
+                                        <a href="/groups/add" class="btn btn-success" type="button">Add Group</a>
                                         </span>
 
-                                            </form>
+                                    </form>
 
-                        {{-- ******************************************************************************** --}}
+                                    {{-- ******************************************************************************** --}}
 
-                                </tr>
+                                    </tr>
 
 
                                 </tbody>
