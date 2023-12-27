@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Group;
 use App\Models\User;
+use App\Models\Group;
 use Illuminate\Database\Seeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\GroupSeeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -16,49 +18,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
 
-            'name' => 'a',
-            'email' => 'a@gmail.com',
-            'password' => Hash::make('password'),
+           $this->call([UserSeeder::class,]);
 
-        ]);
+           $this->call([GroupSeeder::class,]);
 
-        // 25 users factory
-        for ($i=1; $i <= 25 ; $i++) {
-            User::factory()->create([
-                'name' => 'a'."$i",
-                'email' => 'a'."$i".'@gmail.com',
-                'password' => Hash::make('password'),
-
-            ]);
-           }
-
-        // 8 Groups factory
-        for ($i=1; $i <= 5 ; $i++) {
-            $j = ($i *2)+3;
-            Group::factory()->create([
-
-                'admin_id'=> $j,
-                'name'=> 'Group'."$i",
-
-            ]);
-           }
-
-           // 16 Files factory
-        // for ($i=1; $i <= 16 ; $i++) {
-
-        //     Group::factory()->create([
-
-        //         'name'   => 'file'."$i",
-        //         // 'status'   => 'free',
-        //         'user_id'   => $i,
-        //         'group_id'   => $i+1,
-        //         'file'   => 'any',
-
-        //     ]);
-        //    }
-
-
+           $this->call([GroupUsersSeeder::class,]);
     }
 }
