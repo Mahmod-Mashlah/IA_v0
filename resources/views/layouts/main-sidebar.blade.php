@@ -46,7 +46,7 @@
                       </a>
                   </li>
 
-               <li class="nav-item menu-open">
+               {{-- <li class="nav-item menu-open">
                 <a href="#"  class="nav-link active">
                   <i class="nav-icon fas fa-th"></i>
                   <p>
@@ -60,7 +60,7 @@
                       <i class="far fa fa-indent nav-icon"></i>
                       <p>Show Files</p>
                       </a>
-                  </li>
+                  </li> --}}
                   {{-- <li class="nav-item">
                       <a href="{{ url('./files/add', []) }}" target="_blank" class="nav-link ">
                       <i class="far fa fa-indent nav-icon"></i>

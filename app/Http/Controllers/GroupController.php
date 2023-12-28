@@ -17,8 +17,21 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::all()/*->where('group_id',Auth::user()->id)*/;
 
+        if (auth()->user()->id == 1) {
+            $groups = Group::all()/*->where('group_id',Auth::user()->id)*/;
+            // dd($groups);
+        } else {
+
+            $user_id = auth()->user()->id;
+            $user = User::find($user_id);
+            // $groups = GroupUser::all()->where('user_id', $user_id);
+
+            $groups = $user->Groups()->orderBy('group_id', 'asc')->get();
+
+            // dd($groups);
+
+        }
         return view('groups.index', compact([
             'groups',
         ]));
@@ -50,6 +63,15 @@ class GroupController extends Controller
 
         ]);
 
+        GroupUser::factory()->create([
+
+            'user_id' => auth()->user()->id,
+            'group_id' => $group->id,
+
+        ]);
+
+
+
         $group->save();
         // Redirect or return a response
         Alert::success('Done !', 'a new group has been created Successfully');
@@ -63,7 +85,8 @@ class GroupController extends Controller
 
         $group = Group::findOrFail($id);
 
-        $group_Users = $group->Users;
+        // $group_Users = $group->Users;
+        $group_Users = $group->Users()->orderBy('created_at', 'asc')->get();
 
 
         return view('groups/edit-permissions', compact([
@@ -83,8 +106,7 @@ class GroupController extends Controller
         if ($Requested_data->exists()) {
 
             return redirect()->back()->with('error_User_Is_Exist', 'Error . The user is already in this group!');
-        }
-        else {
+        } else {
 
             GroupUser::factory()->create([
 
