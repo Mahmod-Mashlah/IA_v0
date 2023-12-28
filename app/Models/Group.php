@@ -27,7 +27,7 @@ class Group extends Model
 
     public function Users()
     {
-        return $this->belongsToMany(User::class, 'groups_users');
+        return $this->belongsToMany(User::class, 'group_user');
     }
 
     public function File()

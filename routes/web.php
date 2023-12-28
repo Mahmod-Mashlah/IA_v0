@@ -45,12 +45,21 @@ Route::middleware('web-auth')->group(function ()
 
             Route::post('upload_file',[FileController::class, 'upload_file']);
 
-          // Download  Files :
+            // Download  Files :
 
             Route::post('downloadfile', [FileController::class, 'downloadfile']);
 
+            // Users Permissions In One Group
+
+            Route::get('/groups/edit-permissions/{id}', [GroupController::class, 'edit_permissions'])->name('edit-permissions');
+
+            // Add user to a group
+
+            Route::post('assign-user-to-group', [GroupController::class, 'assign_user_to_group'])->name('assign-user-to-group');
+
+            // Add user to a group
+
+            Route::post('remove-user-from-group', [GroupController::class, 'remove_user_from_group'])->name('remove-user-from-group');
+
 });
-
-
-
 
