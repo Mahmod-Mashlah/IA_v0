@@ -30,7 +30,7 @@ class Group extends Model
         return $this->belongsToMany(User::class, 'group_user');
     }
 
-    public function File()
+    public function Files()
     {
         return $this->hasMany(File::class);
     }

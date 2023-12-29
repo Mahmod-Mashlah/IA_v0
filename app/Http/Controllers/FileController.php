@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,11 +16,12 @@ class FileController extends Controller
         return view('files.index', compact(['files']));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $files = File::all();
+        $group = Group::find($request->group_id);
         return view('files.add',compact([
-            'files',
+            'files','group',
         ]));
     }
 
@@ -39,9 +41,10 @@ class FileController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
-        $files = File::all();
+        $files = File::all()->where('group_id',$request->group_id);
+        $group = Group::find($request->group_id);
 
-        return view('files.index', compact(['files']));
+        return view('groups.show-group-files', compact(['files','group']));
 
     }
     public function downloadfile(Request $request)

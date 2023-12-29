@@ -47,7 +47,7 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Add a New File</h3>
+                                <h3 class="card-title">Add a New File in <b class="text-yellow">{{ $group->name }}</b></h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -60,10 +60,13 @@
                                     <div class="form-file">
 
 
-                                        <label for="group_id">Group ID</label>
+                                        {{-- <label for="group_id">Group ID</label>
 
                                         <input id="group_id" class="form-control bg- light" type="text" name="group_id"
-                                            required />
+                                            required /> --}}
+
+                                            <input type="hidden" id="group_id" name="group_id"
+                                            value="{{ $group->id }}">
 
                                         <label for="file">file</label>
                                         <input id="file" class="form-control bg- light" type="file" name="file"

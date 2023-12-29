@@ -19,47 +19,48 @@ Route::post('/login', [WebAuthController::class, 'processLogin'])->name('login')
 
 // Private Routes :
 
-Route::middleware('web-auth')->group(function ()
-{
+Route::middleware('web-auth')->group(function () {
 
 
     // Groups :
 
-            // index :
+    // index :
 
-            Route::get('/groups',[GroupController::class, 'index'] )->name('groups');
+    Route::get('/groups', [GroupController::class, 'index'])->name('groups');
 
-            // add Group :
-            Route::get('/groups/add', [GroupController::class, 'create'])->name('groups.add');
-            Route::post('/groups/add', [GroupController::class, 'store'])->name('groups.store');
+    // add Group :
+    Route::get('/groups/add', [GroupController::class, 'create'])->name('groups.add');
+    Route::post('/groups/add', [GroupController::class, 'store'])->name('groups.store');
 
     // Files :
 
-          // index :
+    // index For All Files :
 
-            Route::get('/files',[FileController::class, 'index'] )->name('files');
+    Route::get('/files', [FileController::class, 'index'])->name('files');
 
-          // Add and Upload File  :
+    // Show Group Files :
 
-            Route::get('/files/add', [FileController::class, 'create'])->name('files.add');
+    Route::post('/groupfiles', [GroupController::class, 'show'])->name('group.files.show');
 
-            Route::post('upload_file',[FileController::class, 'upload_file']);
+    // Add and Upload File  :
 
-            // Download  Files :
+    Route::get('/files/add', [FileController::class, 'create'])->name('files.add');
 
-            Route::post('downloadfile', [FileController::class, 'downloadfile']);
+    Route::post('upload_file', [FileController::class, 'upload_file']);
 
-            // Users Permissions In One Group
+    // Download  Files :
 
-            Route::get('/groups/edit-permissions/{id}', [GroupController::class, 'edit_permissions'])->name('edit-permissions');
+    Route::post('downloadfile', [FileController::class, 'downloadfile']);
 
-            // Add user to a group
+    // Users Permissions In One Group
 
-            Route::post('assign-user-to-group', [GroupController::class, 'assign_user_to_group'])->name('assign-user-to-group');
+    Route::get('/groups/edit-permissions/{id}', [GroupController::class, 'edit_permissions'])->name('edit-permissions');
 
-            // Add user to a group
+    // Add user to a group
 
-            Route::post('remove-user-from-group', [GroupController::class, 'remove_user_from_group'])->name('remove-user-from-group');
+    Route::post('assign-user-to-group', [GroupController::class, 'assign_user_to_group'])->name('assign-user-to-group');
 
+    // Add user to a group
+
+    Route::post('remove-user-from-group', [GroupController::class, 'remove_user_from_group'])->name('remove-user-from-group');
 });
-

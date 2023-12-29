@@ -60,7 +60,7 @@
                                         <th class='text-center'style="width: 10%">Admin Id</th>
                                         <th class='text-center'style="width: 10%">Go To Files</th>
                                         @if (auth()->user()->id == 1)
-                                        <th class='text-center'style="width: 10%">Users Permissions</th>
+                                            <th class='text-center'style="width: 10%">Users Permissions</th>
                                         @endif
 
                                     </tr>
@@ -82,31 +82,26 @@
                                                 {{ $group->admin_id }}</span></td>
                                         <td class='text-center' style="font-size: 23px;">
                                             <span class="badge bg-white disabled color-palette">
-
-
-
-                                                <form action="{{ url('/groups/add', []) }}" method="POST">
+                                                <form action="groupfiles" method="Post">
                                                     @csrf
-
-                                                    <!-- /.card-body -->
-
-                                                    <a href="/files" class="btn btn-primary" type="button">View Files</a>
+                                                    @method('Post')
+                                                    <button type="submit" class="btn btn-primary">View Files</button>
+                                                    <input type="hidden" id="group_id" name="group_id"
+                                                        value="{{ $group->id }}">
+                                                </form>
                                             </span>
-
-                                            </form>
                                         </td>
 
                                         @if (auth()->user()->id == 1)
+                                            <td class='text-center' style="font-size: 23px;">
+                                                <span class="badge bg-white disabled color-palette">
 
-                                        <td class='text-center' style="font-size: 23px;">
-                                            <span class="badge bg-white disabled color-palette">
-
-                                                    <a href="{{ url('groups/edit-permissions', [$group->id]) }}" class="btn btn-warning" type="button">edit</a>
-                                            </span>
+                                                    <a href="{{ url('groups/edit-permissions', [$group->id]) }}"
+                                                        class="btn btn-warning" type="button">edit</a>
+                                                </span>
 
 
-                                        </td>
-
+                                            </td>
                                         @endif
 
                                     </tr>

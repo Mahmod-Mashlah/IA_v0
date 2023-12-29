@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\GroupUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreGroupRequest;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -44,6 +45,15 @@ class GroupController extends Controller
             'groups',
         ]));
     }
+
+    public function show(Request $request)
+    {
+       $group = Group::find($request->group_id);
+       $files = $group->files;
+
+       return view('groups.show-group-files', compact('group', 'files'));
+    }
+
 
     public function store(StoreGroupRequest $request)
     {
@@ -85,12 +95,12 @@ class GroupController extends Controller
 
         $group = Group::findOrFail($id);
 
-        // $group_Users = $group->Users;
-        $group_Users = $group->Users()->orderBy('created_at', 'asc')->get();
+        $group_Users = $group->Users;
 
-
+        $usersPivot =  DB::table('group_user')->select('*')->where('group_id', $id)->get();
+        // dd($usersPivot);
         return view('groups/edit-permissions', compact([
-            'group', 'group_Users',
+            'group', 'group_Users','usersPivot',
         ]));
     }
 
