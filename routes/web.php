@@ -58,7 +58,7 @@ Route::middleware('web-auth')->group(function () {
 
     Route::post('downloadfile', [FileController::class, 'downloadfile']);
 
-/*_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-*/
+    /*_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-*/
 
 
     // Users Permissions In One Group :
@@ -73,9 +73,11 @@ Route::middleware('web-auth')->group(function () {
 
     Route::post('remove-user-from-group', [GroupController::class, 'remove_user_from_group'])->name('remove-user-from-group');
 
-/*_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-*/
+    /*_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-*/
 
+    // Checkin (reserve a file ) :
 
+    Route::post('check-in', [FileController::class, 'check_in']);
 
 
 

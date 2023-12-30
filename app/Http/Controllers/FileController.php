@@ -57,6 +57,21 @@ class FileController extends Controller
 
                 }
     }
+    public function check_in(Request $request)
+    {
+        $file = File::where('id',$request->file_id)->sharedLock()->first();
+                if($file)
+                {   $file_name=$file->name;
+                    $file->status = 'reserved';
+
+                $path=public_path('filles/'.$file_name);
+
+         return response()->download($path);
+        // $file->status = 'reserved' ;
+             // return redirect()->route('files', compact(['file']))->with('check-in-success ', 'The File is Checked in Successfully');
+
+    }
+    }
 
 
     public function destroy(File $file)

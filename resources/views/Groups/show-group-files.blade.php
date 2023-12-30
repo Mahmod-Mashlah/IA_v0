@@ -57,11 +57,11 @@
                                         <th style="width: 1%"><b>#</b></th>
                                         <th class='text-center' style="width: 10%">Name </th>
                                         {{-- <th style="width: 10%">Edit Employee </th> --}}
-                                        <th class='text-center' style="width: 10%">Status</th>
-                                        <th class='text-center' style="width: 10%">User ID</th>
-                                        <th class='text-center' style="width: 10%">Group ID</th>
+                                        <th class='text-center' style="width: 7%">Status</th>
+                                        <th class='text-center' style="width: 5%">User ID</th>
+                                        <th class='text-center' style="width: 5%">Group ID</th>
                                         <th class='text-center' style="width: 10%">Download</th>
-                                        <th class='text-center' style="width: 10%">Reserve / Free</th>
+                                        <th class='text-center' style="width: 10%">Check-in / Check-out</th>
 
                                     </tr>
                                 </thead>
@@ -98,7 +98,13 @@
                                             </span>
                                         </td>
                                         <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">{{ $file->status }}</span>
+                                                class="badge text-black disabled color-palette">
+                                                <form action="{{ url('check-in') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="file_id" value="{{ $file->id }}">
+                                                    <button type="submit" class="btn btn-warning">check</button>
+                                                </form>
+                                            </span>
                                         </td>
 
                                     </tr>
