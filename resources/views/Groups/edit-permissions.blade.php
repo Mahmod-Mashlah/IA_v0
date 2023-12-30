@@ -152,7 +152,7 @@
                                                 <h5 class="text-center"> {{ $user->name }} </h5>
                                             </td>
                                             <td>
-                                                <h5 class="text-center">  {{ Carbon\Carbon::parse($user->created_at)->format('j/n/Y ,g:i a') }} </h5>
+                                                <h5 class="text-center">  {{ Carbon\Carbon::parse($user->pivot->created_at)->format('j/n/Y ,g:i a') }} </h5>
                                             </td>
                                             <td class="text-center">
                                                 <form action="/remove-user-from-group" method="Post">

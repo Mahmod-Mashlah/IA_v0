@@ -27,7 +27,7 @@ class Group extends Model
 
     public function Users()
     {
-        return $this->belongsToMany(User::class, 'group_user');
+        return $this->belongsToMany(User::class, 'group_user')->withPivot ('created_at','updated_at');
     }
 
     public function Files()

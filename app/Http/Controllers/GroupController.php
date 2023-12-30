@@ -97,12 +97,15 @@ class GroupController extends Controller
 
         $group_Users = $group->Users;
 
-        $usersPivot =  DB::table('group_user')->select('*')->where('group_id', $id)->get();
+        // $usersPivot =  DB::table('group_user')->select('*')->where('group_id', $id)->get();
         // dd($usersPivot);
+
         return view('groups/edit-permissions', compact([
-            'group', 'group_Users','usersPivot',
+            'group', 'group_Users',/*'usersPivot'*/
         ]));
     }
+
+
 
     public function assign_user_to_group(Request $request)
     {
@@ -125,7 +128,7 @@ class GroupController extends Controller
 
             ]);
 
-            return redirect()->back()->with('success', 'A new User created successfully!');
+            return redirect()->back()->with('success', 'A new User has been added successfully!');
         }
     }
     public function remove_user_from_group(Request $request)
@@ -145,6 +148,6 @@ class GroupController extends Controller
             $groupUser->delete();
         }
 
-        return redirect()->back()->with('deleted', 'A new User has been deleted !');
+        return redirect()->back()->with('deleted', ' User has been deleted !');
     }
 }
