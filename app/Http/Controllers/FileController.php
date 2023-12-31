@@ -60,11 +60,13 @@ class FileController extends Controller
     public function check_in(Request $request)
     {
         $file = File::where('id',$request->file_id)->sharedLock()->first();
-                if($file)
+                if($file && $file->status == 'free')
                 {   $file_name=$file->name;
                     $file->status = 'reserved';
+                    $file->save();
 
                 $path=public_path('filles/'.$file_name);
+        // dd($file) ;
 
          return response()->download($path);
         // $file->status = 'reserved' ;

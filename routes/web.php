@@ -77,7 +77,7 @@ Route::middleware('web-auth')->group(function () {
 
     // Checkin (reserve a file ) :
 
-    Route::post('check-in', [FileController::class, 'check_in']);
+    Route::post('check-in', [FileController::class, 'check_in'])->name('check-in');
 
 
 

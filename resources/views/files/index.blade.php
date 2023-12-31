@@ -58,8 +58,8 @@
                                         <th class='text-center' style="width: 10%">Name </th>
                                         {{-- <th style="width: 10%">Edit Employee </th> --}}
                                         <th class='text-center' style="width: 7%">Status</th>
-                                        <th class='text-center' style="width: 5%">User ID</th>
-                                        <th class='text-center' style="width: 5%">Group ID</th>
+                                        <th class='text-center' style="width: 5%">User Id</th>
+                                        <th class='text-center' style="width: 5%">Group Id</th>
                                         <th class='text-center' style="width: 10%">Download</th>
                                         <th class='text-center' style="width: 10%">Check-in / Check-out</th>
 
@@ -89,6 +89,7 @@
 
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-black disabled color-palette">
+
                                                 <form action="{{ url('downloadfile') }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="file_id" value="{{ $file->id }}">
@@ -99,11 +100,18 @@
                                         </td>
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-black disabled color-palette">
+                                                @if ( $file->status == 'free')
+
                                                 <form action="{{ url('check-in') }}" method="POST">
+
                                                     @csrf
                                                     <input type="hidden" name="file_id" value="{{ $file->id }}">
-                                                    <button type="submit" class="btn btn-warning">check</button>
-                                                </form></span>
+                                                    <button type="submit" class="btn btn-warning">check-in</button>
+
+                                                </form>
+                                                @else
+                                                <p class=" text-danger text-center ">reserved</p>                                                @endif
+                                            </span>
                                         </td>
 
                                     </tr>
