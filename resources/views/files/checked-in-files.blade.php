@@ -51,22 +51,24 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
-                            @forelse ($files as $file)
 
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 1%"><b>Action Id</b></th>
+                                        <th style="width: 5%"><b>Action Id</b></th>
                                         <th class='text-center' style="width: 10%">Name </th>
                                         {{-- <th style="width: 10%">Edit Employee </th> --}}
                                         <th class='text-center' style="width: 7%">Status</th>
+                                        <th class='text-center' style="width: 5%">File Id</th>
                                         <th class='text-center' style="width: 5%">Group Id</th>
-                                        <th class='text-center' style="width: 10%">Download</th>
-                                        <th class='text-center' style="width: 10%">Check-out</th>
+                                        <th class='text-center' style="width: 7%">Download</th>
+                                        <th class='text-center' style="width: 7%">Check-out</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                    @forelse ($files as $file)
 
                                     <tr>
 
@@ -80,6 +82,10 @@
                                                 class="badge text-dark  disabled color-palette ">
                                                 {{ $file->File->status }}</span></td>
 
+
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-black disabled color-palette">{{ $file->File->id }}</span>
+                                        </td>
 
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-black disabled color-palette">{{ $file->File->group_id }}</span>
@@ -102,7 +108,7 @@
                                                 <form action="{{ url('check-out-form') }}" method="Get">
 
                                                     @csrf
-                                                    <input type="hidden" name="file_id" value="{{ $file->id }}">
+                                                    <input type="hidden" name="file_id" id="file_id" value="{{ $file->File->id }}">
                                                     <button type="submit" class="btn btn-danger  ">check-out</button>
 
                                                 </form>
@@ -119,16 +125,17 @@
 
                                 </tbody>
 
+                                @empty
+                                        <h3 class="text-border-red alert  text-danger text-center ">
+                                            There's no Checked-in Files  yet
+                                        </h3>
+                                            @endforelse
+
                                 <tfoot>
 
                                 </tfoot>
                             </table>
 
-                            @empty
-                                    <h3 class="text-border-red alert  text-danger text-center ">
-                                        There's no Checked-in Files  yet
-                                    </h3>
-                                        @endforelse
                         </div>
                         <!-- /.card-body -->
                     </div>

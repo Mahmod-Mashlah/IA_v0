@@ -83,7 +83,9 @@ Route::middleware('web-auth')->group(function () {
 
     // // Checkout (free a file ) :
 
-    // Route::post('check-out-form', [FileController::class, 'check_out'])->name('check-out');
+    Route::get('check-out-form', [FileController::class, 'check_out_form'])->name('check-out-form');
+
+    Route::post('check-out', [FileController::class, 'check_out'])->name('check-out');
 
 
 
