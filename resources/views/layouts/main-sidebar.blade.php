@@ -43,16 +43,24 @@
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
                               <a href="{{ url('./groups', []) }}" class="nav-link ">
-                                  <i class="far fa fa-indent nav-icon"></i>
+                                  <i class="far fa fa-th-large  nav-icon"></i>
                                   <p>Show All Groups </p>
                               </a>
                           </li>
+                          @if (auth()->user()->id == 1)
+                              <li class="nav-item">
+                                  <a href="{{ url('./files', []) }}" class="nav-link ">
+                                      <i class="far fa fa-file nav-icon"></i>
+                                      <p>Show All Files</p>
+                                  </a>
+                              </li>
+                          @endif
                           <li class="nav-item">
-                            <a href="{{ url('./files', []) }}" class="nav-link ">
-                            <i class="far fa fa-indent nav-icon"></i>
-                            <p>Show All Files</p>
-                            </a>
-                        </li>
+                              <a href="{{ url('checked-in-files', []) }}" class="nav-link ">
+                                  <i class="far fa fa-bullseye nav-icon"></i>
+                                  <p>Files Checked in </p>
+                              </a>
+                          </li>
                           {{--
                <li class="nav-item menu-open">
                 <a href="#"  class="nav-link active">

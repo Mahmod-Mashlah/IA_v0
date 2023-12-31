@@ -79,7 +79,11 @@ Route::middleware('web-auth')->group(function () {
 
     Route::post('check-in', [FileController::class, 'check_in'])->name('check-in');
 
+    Route::get('checked-in-files', [FileController::class, 'checked_in_files'])->name('checked-in-files');
 
+    // // Checkout (free a file ) :
+
+    // Route::post('check-out-form', [FileController::class, 'check_out'])->name('check-out');
 
 
 

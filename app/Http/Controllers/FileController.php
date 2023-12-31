@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Action;
 use App\Models\File;
 use App\Models\Group;
 use Illuminate\Http\Request;
@@ -65,6 +66,14 @@ class FileController extends Controller
                     $file->status = 'reserved';
                     $file->save();
 
+                    Action::factory()->create([
+
+                        'user_id' => auth()->user()->id,
+                        'file_id' => $file->id,
+                        'action' => 'check-in',
+
+                    ]);
+
                 $path=public_path('filles/'.$file_name);
         // dd($file) ;
 
@@ -73,8 +82,15 @@ class FileController extends Controller
              // return redirect()->route('files', compact(['file']))->with('check-in-success ', 'The File is Checked in Successfully');
 
     }
+
     }
 
+    public function checked_in_files()
+    {
+        $files = Action::all()->where('action', 'check-in')
+                                ->where('user_id',auth()->user()->id);
+        return view('files.checked-in-files', compact(['files']));
+    }
 
     public function destroy(File $file)
     {

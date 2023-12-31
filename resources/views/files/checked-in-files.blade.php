@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Files || Index
+    Files || Checked in Files
 @endsection {{-- or @stop --}}
 
 @section('css')
@@ -28,7 +28,7 @@
 @endsection
 
 @section('son2')
-    Files Index
+    Checked in Files
 @endsection
 
 
@@ -44,8 +44,8 @@
                     </div>
                 </div> --}}
                     <div class="card">
-                        <div class="card-header header-text-center bg-blue">
-                            <h1 class="card-title text-white">all Files in <b class="text-yellow">{{ $group->name }} </b>
+                        <div class="card-header bg-blue">
+                            <h1 class="card-title  text-white">These are all Checked in Files you made
                             </h1>
                         </div>
 
@@ -54,13 +54,13 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 1%"><b>#</b></th>
+                                        <th style="width: 1%"><b>Action Id</b></th>
                                         <th class='text-center' style="width: 10%">Name </th>
                                         {{-- <th style="width: 10%">Edit Employee </th> --}}
                                         <th class='text-center' style="width: 7%">Status</th>
-                                        <th class='text-center' style="width: 5%">User Id </th>
+                                        <th class='text-center' style="width: 5%">Group Id</th>
                                         <th class='text-center' style="width: 10%">Download</th>
-                                        <th class='text-center' style="width: 10%">Check-in / Check-out</th>
+                                        <th class='text-center' style="width: 10%">Check-out</th>
 
                                     </tr>
                                 </thead>
@@ -73,19 +73,20 @@
                                         <td> <b> {{ $file->id }} </b></td>
 
                                         <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">{{ $file->name }}</span>
+                                                class="badge text-black disabled color-palette">{{ $file->File->name }}</span>
                                         </td>
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-dark  disabled color-palette ">
-                                                {{ $file->status }}</span></td>
+                                                {{ $file->File->status }}</span></td>
+
 
                                         <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">{{ $file->user_id }}</span>
+                                                class="badge text-black disabled color-palette">{{ $file->File->group_id}}</span>
                                         </td>
-
 
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-black disabled color-palette">
+
                                                 <form action="{{ url('downloadfile') }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="file_id" value="{{ $file->id }}">
@@ -94,21 +95,16 @@
 
                                             </span>
                                         </td>
-                                        <td class='text-center' style="font-size: 23px;">
-                                            <span
-                                                class="badge text-black disabled color-palette" >
-                                                @if ( $file->status == 'free')
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-black disabled color-palette">
 
-                                                <form action="{{ url('check-in') }}" method="POST">
+                                                <form action="{{ url('check-out-form') }}" method="Get">
 
                                                     @csrf
                                                     <input type="hidden" name="file_id" value="{{ $file->id }}">
-                                                    <button type="submit" class="btn btn-warning">check-in</button>
+                                                    <button type="submit" class="btn btn-danger  ">check-out</button>
 
                                                 </form>
-                                                @else
-                                                <p class=" text-danger text-center ">reserved</p>
-                                                @endif
                                             </span>
                                         </td>
 
@@ -116,14 +112,7 @@
                                     @endforeach
 
 
-                                    <form action="{{ route('files.add') }}" method="Get">
-                                        @csrf
-                                        @method('Get')
-                                        <button type="submit" class="btn btn-success"> Add File </button>
-                                        <input type="hidden" id="group_id" name="group_id"
-                                            value="{{ $group->id }}">
-
-                                    </form>
+                                    {{-- <a href="{{ route('files.add') }}" class="btn btn-success" type="button"> Add File</a> --}}
 
                                     </tr>
 
