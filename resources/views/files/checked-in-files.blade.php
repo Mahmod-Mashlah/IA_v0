@@ -51,6 +51,8 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
+                            @forelse ($files as $file)
+
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -68,7 +70,6 @@
 
                                     <tr>
 
-                                        @foreach ($files as $file)
                                     <tr>
                                         <td> <b> {{ $file->id }} </b></td>
 
@@ -81,7 +82,7 @@
 
 
                                         <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">{{ $file->File->group_id}}</span>
+                                                class="badge text-black disabled color-palette">{{ $file->File->group_id }}</span>
                                         </td>
 
                                         <td class='text-center' style="font-size: 23px;"><span
@@ -109,7 +110,7 @@
                                         </td>
 
                                     </tr>
-                                    @endforeach
+
 
 
                                     {{-- <a href="{{ route('files.add') }}" class="btn btn-success" type="button"> Add File</a> --}}
@@ -122,6 +123,12 @@
 
                                 </tfoot>
                             </table>
+
+                            @empty
+                                    <h3 class="text-border-red alert  text-danger text-center ">
+                                        There's no Checked-in Files  yet
+                                    </h3>
+                                        @endforelse
                         </div>
                         <!-- /.card-body -->
                     </div>
