@@ -4,6 +4,7 @@ use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\WebAuthController;
 
@@ -39,7 +40,7 @@ Route::middleware('web-auth')->group(function () {
     Route::get('/groups/add', [GroupController::class, 'create'])->name('groups.add');
     Route::post('/groups/add', [GroupController::class, 'store'])->name('groups.store');
 
-/*_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-*/
+    /*_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-*/
 
 
     // Files :
@@ -89,7 +90,13 @@ Route::middleware('web-auth')->group(function () {
 
     Route::post('multi-check-in', [FileController::class, 'multi_check_in'])->name('multi-check-in');
 
+    /*_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-*/
 
+    // Show All Users :
+
+    Route::get('/users', [UserController::class, 'index'])->name('users');
+
+    Route::get('/user-checks-in-report', [UserController::class, 'user_checks_in_report'])->name('user-checks-in-report');
 
 
 });

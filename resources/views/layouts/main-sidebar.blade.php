@@ -54,7 +54,16 @@
                                       <p>Show All Files</p>
                                   </a>
                               </li>
+
+                              <li class="nav-item">
+                                  <a href="{{ url('users', []) }}" class="nav-link ">
+                                      <i class="far fa fa-users nav-icon"></i>
+                                      <p>Users</p>
+                                  </a>
+                              </li>
+
                           @endif
+
                           <li class="nav-item">
                               <a href="{{ url('checked-in-files', []) }}" class="nav-link ">
                                   <i class="far fa fa-bullseye nav-icon"></i>
