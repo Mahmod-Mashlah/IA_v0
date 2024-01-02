@@ -29,7 +29,7 @@ class FileController extends Controller
 
     public function upload_file(Request $request)
     {
-
+        // dd(1);
         $file_extension = $request->file->getClientOriginalName();
         $filename = $file_extension;
 
@@ -89,10 +89,8 @@ class FileController extends Controller
 
         $fileIds = $request->fileIds;
         $files = File::findMany($fileIds);
-        dd($fileIds);
         foreach ($files as $file) {
             //Logic
-
             if ($file && $file->status == 'free') {
                 $file_name = $file->name;
                 $file->status = 'reserved';
@@ -109,7 +107,7 @@ class FileController extends Controller
                 $path = public_path('filles/' . $file_name);
                 // dd($file) ;
 
-                return response()->download($path);
+                 response()->download($path);
                 // $file->status = 'reserved' ;
                 // return redirect()->route('files', compact(['file']))->with('check-in-success ', 'The File is Checked in Successfully');
 

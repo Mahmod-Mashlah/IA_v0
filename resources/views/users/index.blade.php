@@ -57,7 +57,7 @@
                                         <th style="width: 1%"><b>#</b></th>
                                         <th class='text-center' style="width: 10%">Name </th>
                                         <th class='text-center' style="width: 7%">E-mail</th>
-                                        <th class='text-center' style="width: 5%">Checks-in</th>
+                                        <th class='text-center' style="width: 5%">Show Actions</th>
 
                                     </tr>
                                 </thead>

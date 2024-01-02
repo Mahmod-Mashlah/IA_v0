@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Actions For {{ $user->name }}
+    Actions For {{ $file->name }}
 @endsection {{-- or @stop --}}
 
 @section('css')
@@ -24,11 +24,11 @@
 @endsection
 
 @section('son1')
-    Users
+    Files
 @endsection
 
 @section('son2')
-    Actions For <b class="text-yellow">{{ $user->name }} </b>
+    Actions For <b class="text-yellow">{{ $file->name }} </b>
 @endsection
 
 @section('content')
@@ -44,8 +44,8 @@
                 </div> --}}
                     <div class="card">
                         <div class="card-header header-text-center bg-blue">
-                            <h1 class="card-title text-white">All Actions For User : <b
-                                    class="text-yellow">{{ $user->name }} </b>
+                            <h1 class="card-title text-white">All Actions For File : <b
+                                    class="text-yellow">{{ $file->name }} </b>
                             </h1>
                         </div>
 
@@ -58,8 +58,8 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 1%"><b>#</b></th>
-                                        <th class='text-center' style="width: 5%">File Id </th>
-                                        <th class='text-center' style="width: 5%">File Name </th>
+                                        <th class='text-center' style="width: 5%">User Id </th>
+                                        <th class='text-center' style="width: 5%">User Name </th>
                                         <th class='text-center' style="width: 7%">Action</th>
                                         <th class='text-center' style="width: 10%">created At </th>
 
@@ -70,7 +70,7 @@
 
                                     <tr>
 
-                                        @foreach ($user_Actions as $action)
+                                        @foreach ($file_Actions as $action)
                                     <tr>
 
                                         <td>
@@ -78,11 +78,12 @@
                                         </td>
 
                                         <td class='text-center' style="font-size: 18px;">
-                                            <b> {{ $action->file_id }} </b>
+                                            <b> {{ $action->user_id }} </b>
                                         </td>
 
                                         <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">{{ $action->File->name }}</span>
+                                                class="badge text-black disabled color-palette">
+                                                {{ $action->User->name }}</span>
                                         </td>
 
                                         <td class='text-center' style="font-size: 23px;"><span

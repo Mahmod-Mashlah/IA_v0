@@ -57,11 +57,12 @@
                                         <th style="width: 1%"><b>#</b></th>
                                         <th class='text-center' style="width: 10%">Name </th>
                                         {{-- <th style="width: 10%">Edit Employee </th> --}}
-                                        <th class='text-center' style="width: 7%">Status</th>
-                                        <th class='text-center' style="width: 5%">User Id</th>
-                                        <th class='text-center' style="width: 5%">Group Id</th>
-                                        <th class='text-center' style="width: 10%">Download</th>
-                                        <th class='text-center' style="width: 10%">Check-in / Check-out</th>
+                                        <th class='text-center' style="width: 3%">Status</th>
+                                        <th class='text-center' style="width: 3%">User Id</th>
+                                        <th class='text-center' style="width: 3%">Group Id</th>
+                                        <th class='text-center' style="width: 5%">Show Actions </th>
+                                        <th class='text-center' style="width: 5%">Download</th>
+                                        <th class='text-center' style="width: 5%">Check-in / Check-out</th>
 
                                     </tr>
                                 </thead>
@@ -86,6 +87,18 @@
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-black disabled color-palette">{{ $file->group_id }}</span>
                                         </td>
+
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                            class="badge text-black disabled color-palette">
+
+                                            <form action="{{ url('file-checks-in-report') }}" method="Get">
+                                                @csrf
+                                                <input type="hidden" name="file_id" value="{{ $file->id }}">
+                                                <button type="submit" class="btn btn-secondary">show</button>
+                                            </form>
+
+                                        </span>
+                                    </td>
 
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-black disabled color-palette">

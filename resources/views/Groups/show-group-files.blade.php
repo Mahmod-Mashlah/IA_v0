@@ -90,8 +90,7 @@
                                         @foreach ($files as $file)
                                     <tr>
 
-                                        <td> <input type="checkbox" />
-                                            <input type="hidden" name="fileIds[]" value="{{ $file->id }}">
+                                        <td> <input type="checkbox"  name="fileIds[]" value="{{ $file->id }}" />
                                             <b> {{ $file->id }} </b>
                                         </td>
 
