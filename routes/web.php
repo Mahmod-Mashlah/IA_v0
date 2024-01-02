@@ -87,6 +87,7 @@ Route::middleware('web-auth')->group(function () {
 
     Route::post('check-out', [FileController::class, 'check_out'])->name('check-out');
 
+    Route::post('multi-check-in', [FileController::class, 'multi_check_in'])->name('multi-check-in');
 
 
 

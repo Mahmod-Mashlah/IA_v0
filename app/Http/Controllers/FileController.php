@@ -21,48 +21,48 @@ class FileController extends Controller
     {
         $files = File::all();
         $group = Group::find($request->group_id);
-        return view('files.add',compact([
-            'files','group',
+        return view('files.add', compact([
+            'files', 'group',
         ]));
     }
 
 
-    public function upload_file(Request $request) {
+    public function upload_file(Request $request)
+    {
 
-        $file_extension = $request->file->getClientOriginalName() ;
-        $filename = $file_extension ;
+        $file_extension = $request->file->getClientOriginalName();
+        $filename = $file_extension;
 
-        $request->file->move('filles',$filename);
+        $request->file->move('filles', $filename);
 
         File::create([
-            'name' => $filename ,
+            'name' => $filename,
             'status' => 'free',
-            'group_id' => $request->group_id ,
-            'file' => 'public/filles/'.$filename ,
+            'group_id' => $request->group_id,
+            'file' => 'public/filles/' . $filename,
             'user_id' => auth()->user()->id,
         ]);
 
-        $files = File::all()->where('group_id',$request->group_id);
+        $files = File::all()->where('group_id', $request->group_id);
         $group = Group::find($request->group_id);
 
-        return view('groups.show-group-files', compact(['files','group']));
-
+        return view('groups.show-group-files', compact(['files', 'group']));
     }
     public function downloadfile(Request $request)
     {
-        $file = File::where('id',$request->file_id)->sharedLock()->first();
-        if($file)
-        {$file_name=$file->name;
-            $path=public_path('filles/'.$file_name);
+        $file = File::where('id', $request->file_id)->sharedLock()->first();
+        if ($file) {
+            $file_name = $file->name;
+            $path = public_path('filles/' . $file_name);
             return response()->download($path);
-
         }
     }
+
     public function check_in(Request $request)
     {
-        $file = File::where('id',$request->file_id)->sharedLock()->first();
-        if($file && $file->status == 'free')
-        {   $file_name=$file->name;
+        $file = File::where('id', $request->file_id)->sharedLock()->first();
+        if ($file && $file->status == 'free') {
+            $file_name = $file->name;
             $file->status = 'reserved';
             $file->save();
 
@@ -74,71 +74,103 @@ class FileController extends Controller
 
             ]);
 
-            $path=public_path('filles/'.$file_name);
-        // dd($file) ;
+            $path = public_path('filles/' . $file_name);
+            // dd($file) ;
 
-        return response()->download($path);
-        // $file->status = 'reserved' ;
-        // return redirect()->route('files', compact(['file']))->with('check-in-success ', 'The File is Checked in Successfully');
+            return response()->download($path);
+            // $file->status = 'reserved' ;
+            // return redirect()->route('files', compact(['file']))->with('check-in-success ', 'The File is Checked in Successfully');
 
+        }
     }
 
-}
+    public function multi_check_in(Request $request)
+    {
 
-public function checked_in_files()
-{
-    $files = Action::all()->where('action', 'check-in')
-    ->where('user_id',auth()->user()->id);
-    return view('files.checked-in-files', compact(['files']));
-}
+        $fileIds = $request->fileIds;
+        $files = File::findMany($fileIds);
+        dd($fileIds);
+        foreach ($files as $file) {
+            //Logic
 
-public function check_out_form(Request $request)
-{
-    $file = File::find($request->file_id);
+            if ($file && $file->status == 'free') {
+                $file_name = $file->name;
+                $file->status = 'reserved';
+                $file->save();
 
-    return view('files.check-out-form',compact([
-        'file'
-    ]));
-}
+                Action::factory()->create([
 
-public function check_out(Request $request) {
+                    'user_id' => auth()->user()->id,
+                    'file_id' => $file->id,
+                    'action' => 'check-in',
 
-    $oldFile = File::find($request->file_id) ;
+                ]);
 
-    $file_extension = $request->file->getClientOriginalName() ;
-    $filename = $file_extension ;
+                $path = public_path('filles/' . $file_name);
+                // dd($file) ;
 
-    $request->file->move('filles',$filename);
+                return response()->download($path);
+                // $file->status = 'reserved' ;
+                // return redirect()->route('files', compact(['file']))->with('check-in-success ', 'The File is Checked in Successfully');
 
-    $oldFile->update([
-        'name' => $filename ,
-        'status' => 'free',
-        'file' => 'public/filles/'.$filename ,
-        'user_id' => auth()->user()->id,
-    ]);
+            }
 
-    Action::factory()->create([
+        }
+    }
+    public function checked_in_files()
+    {
+        $files = Action::all()->where('action', 'check-in')
+            ->where('user_id', auth()->user()->id);
+        return view('files.checked-in-files', compact(['files']));
+    }
 
-        'user_id' => auth()->user()->id,
-        'file_id' => $oldFile->id,
-        'action' => 'check-out',
+    public function check_out_form(Request $request)
+    {
+        $file = File::find($request->file_id);
 
-    ]);
+        return view('files.check-out-form', compact([
+            'file'
+        ]));
+    }
+
+    public function check_out(Request $request)
+    {
+
+        $oldFile = File::find($request->file_id);
+
+        $file_extension = $request->file->getClientOriginalName();
+        $filename = $file_extension;
+
+        $request->file->move('filles', $filename);
+
+        $oldFile->update([
+            'name' => $filename,
+            'status' => 'free',
+            'file' => 'public/filles/' . $filename,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        Action::factory()->create([
+
+            'user_id' => auth()->user()->id,
+            'file_id' => $oldFile->id,
+            'action' => 'check-out',
+
+        ]);
 
 
-    $files = File::all()->where('group_id',$oldFile->group_id);
-    $group = Group::find($oldFile->group_id);
+        $files = File::all()->where('group_id', $oldFile->group_id);
+        $group = Group::find($oldFile->group_id);
 
-    return view('groups.show-group-files', compact(['files','group']));
-}
+        return view('groups.show-group-files', compact(['files', 'group']));
+    }
 
 
-public function destroy(File $file)
-{
-    Storage::delete($file->path);
-    $file->delete();
+    public function destroy(File $file)
+    {
+        Storage::delete($file->path);
+        $file->delete();
 
-    return redirect()->route('files.index');
-}
-
+        return redirect()->route('files.index');
+    }
 }

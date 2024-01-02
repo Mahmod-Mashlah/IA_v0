@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Files || Index
+    {{ $group->name }} Files
 @endsection {{-- or @stop --}}
 
 @section('css')
@@ -51,6 +51,24 @@
 
                         <!-- /.card-header -->
                         <div class="card-body">
+
+                            <!-- Add File Form -->
+                            <form action="{{ route('files.add') }}" method="Get">
+                                @csrf
+                                @method('Get')
+                                <button type="submit" class="btn btn-success col-md-12"> Add File </button>
+                                <input type="hidden" id="group_id" name="group_id" value="{{ $group->id }}">
+
+                            </form>
+                            <!-- /. Add File Form -->
+                            <br>
+
+                            {{-- multi check in Form  --}}
+
+                            <form id="multiCheckInForm" action="{{ route('multi-check-in') }}" method="Post">
+                                @csrf
+                                @method('Post')
+
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -66,11 +84,16 @@
                                 </thead>
                                 <tbody>
 
+
                                     <tr>
 
                                         @foreach ($files as $file)
                                     <tr>
-                                        <td> <b> {{ $file->id }} </b></td>
+
+                                        <td> <input type="checkbox" />
+                                            <input type="hidden" name="fileIds[]" value="{{ $file->id }}">
+                                            <b> {{ $file->id }} </b>
+                                        </td>
 
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-black disabled color-palette">{{ $file->name }}</span>
@@ -86,28 +109,26 @@
 
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-black disabled color-palette">
-                                                <form action="{{ url('downloadfile') }}" method="POST">
+                                                <form id="downloadForm" action="{{ url('downloadfile') }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="file_id" value="{{ $file->id }}">
-                                                    <button type="submit" class="btn btn-info">download</button>
+                                                    <button type="submit" onclick="submitDownloadForm()" class="btn btn-info">download</button>
                                                 </form>
 
                                             </span>
                                         </td>
                                         <td class='text-center' style="font-size: 23px;">
-                                            <span
-                                                class="badge text-black disabled color-palette" >
-                                                @if ( $file->status == 'free')
+                                            <span class="badge text-black disabled color-palette">
+                                                @if ($file->status == 'free')
+                                                    <form id="checkInForm" action="{{ url('check-in') }}" method="POST">
 
-                                                <form action="{{ url('check-in') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="file_id" value="{{ $file->id }}">
+                                                        <button type="submit" onclick="submitCheckInForm()" class="btn btn-warning">check-in</button>
 
-                                                    @csrf
-                                                    <input type="hidden" name="file_id" value="{{ $file->id }}">
-                                                    <button type="submit" class="btn btn-warning">check-in</button>
-
-                                                </form>
+                                                    </form>
                                                 @else
-                                                <p class=" text-danger text-center ">reserved</p>
+                                                    <p class=" text-danger text-center ">reserved</p>
                                                 @endif
                                             </span>
                                         </td>
@@ -115,17 +136,7 @@
                                     </tr>
                                     @endforeach
 
-
-                                    <form action="{{ route('files.add') }}" method="Get">
-                                        @csrf
-                                        @method('Get')
-                                        <button type="submit" class="btn btn-success"> Add File </button>
-                                        <input type="hidden" id="group_id" name="group_id"
-                                            value="{{ $group->id }}">
-
-                                    </form>
-
-                                    </tr>
+                                    </tr>{{-- delete tr to show other javascript options --}}
 
                                 </tbody>
 
@@ -133,8 +144,16 @@
 
                                 </tfoot>
                             </table>
+                            <br>
+
+                                <button type="submit" class="btn btn-primary col-md-12 " onclick="submitMultiCheckInForm()"> Check in selected Files </button>
+
+                            </form>
+                            {{-- end of multi check in Form  --}}
+
                         </div>
                         <!-- /.card-body -->
+
                     </div>
                     <!-- /.card -->
 
@@ -192,4 +211,50 @@
             });
         });
     </script>
+
+    {{-- Nested Forms Solve Proplem --}}
+    <script>
+        function submitMultiCheckInForm() {
+    const multiCheckInForm = document.getElementById('multiCheckInForm');
+    const downloadForm = document.getElementById('downloadForm');
+    const checkInForm = document.getElementById('checkInForm');
+
+    // check if inner forms are valid
+    if (downloadForm.checkValidity() && checkInForm.checkValidity()) {
+        // if inner forms are valid, submit the outer form
+        multiCheckInForm.submit();
+    } else {
+        // if inner forms are not valid, show error messages
+        downloadForm.reportValidity();
+        checkInForm.reportValidity();
+    }
+}
+
+function submitDownloadForm() {
+    const downloadForm = document.getElementById('downloadForm');
+
+    // check if inner form is valid
+    if (downloadForm.checkValidity()) {
+        // if inner form is valid, submit it (or perform other actions as required)
+        downloadForm.submit();
+    } else {
+        // if inner form is not valid, show error messages
+        downloadForm.reportValidity();
+    }
+}
+
+function submitCheckInForm() {
+    const checkInForm = document.getElementById('checkInForm');
+
+    // check if inner form is valid
+    if (checkInForm.checkValidity()) {
+        // if inner form is valid, submit it (or perform other actions as required)
+        checkInForm.submit();
+    } else {
+        // if inner form is not valid, show error messages
+        checkInForm.reportValidity();
+    }
+}
+    </script>
+
 @endsection

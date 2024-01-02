@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Files || Index
+    All Files
 @endsection {{-- or @stop --}}
 
 @section('css')
@@ -116,9 +116,6 @@
 
                                     </tr>
                                     @endforeach
-
-
-                                    {{-- <a href="{{ route('files.add') }}" class="btn btn-success" type="button"> Add File</a> --}}
 
                                     </tr>
 

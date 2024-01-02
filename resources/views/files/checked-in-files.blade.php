@@ -118,9 +118,6 @@
                                     </tr>
 
 
-
-                                    {{-- <a href="{{ route('files.add') }}" class="btn btn-success" type="button"> Add File</a> --}}
-
                                     </tr>
 
                                 </tbody>
