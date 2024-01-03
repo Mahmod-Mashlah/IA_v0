@@ -35,7 +35,7 @@ Route::middleware('web-auth')->group(function () {
 
     // Show Group Files :
 
-    Route::post('/groupfiles', [GroupController::class, 'show'])->name('group.files.show');
+    Route::get('/groupfiles', [GroupController::class, 'show'])->name('group.files.show');
 
     // add Group :
     Route::get('/groups/add', [GroupController::class, 'create'])->name('groups.add');
@@ -51,7 +51,8 @@ Route::middleware('web-auth')->group(function () {
 
     Route::get('/files/add', [FileController::class, 'create'])->name('files.add');
 
-    Route::post('upload_file', [FileController::class, 'upload_file']);
+    Route::post('/files/add', [FileController::class, 'upload_file'])->name('files.store');
+
 
     // Download  Files :
 

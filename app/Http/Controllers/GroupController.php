@@ -49,7 +49,7 @@ class GroupController extends Controller
     public function show(Request $request)
     {
        $group = Group::find($request->group_id);
-       $files = $group->files;
+       $files = $group->Files;
 
        return view('groups.show-group-files', compact('group', 'files'));
     }

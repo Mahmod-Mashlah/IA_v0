@@ -52,7 +52,7 @@
                             <!-- /.card-header -->
                             <!-- form start -->
 
-                            <form method="POST" action="{{ url('upload_file') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('/files/add') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('Post')
                                 <div class="card-body">

@@ -46,7 +46,10 @@ class FileController extends Controller
         $files = File::all()->where('group_id', $request->group_id);
         $group = Group::find($request->group_id);
 
-        return view('groups.show-group-files', compact(['files', 'group']));
+
+
+        return redirect()->back();
+        // return view('groups.show-group-files', compact(['files', 'group']));
     }
     public function downloadfile(Request $request)
     {
@@ -107,12 +110,11 @@ class FileController extends Controller
                 $path = public_path('filles/' . $file_name);
                 // dd($file) ;
 
-                 response()->download($path);
+                response()->download($path);
                 // $file->status = 'reserved' ;
                 // return redirect()->route('files', compact(['file']))->with('check-in-success ', 'The File is Checked in Successfully');
 
             }
-
         }
     }
     public function checked_in_files()

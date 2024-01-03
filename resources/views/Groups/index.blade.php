@@ -82,9 +82,9 @@
                                                 {{ $group->admin_id }}</span></td>
                                         <td class='text-center' style="font-size: 23px;">
                                             <span class="badge bg-white disabled color-palette">
-                                                <form action="groupfiles" method="Post">
+                                                <form action="groupfiles" method="Get">
                                                     @csrf
-                                                    @method('Post')
+                                                    @method('Get')
                                                     <button type="submit" class="btn btn-primary">View Files</button>
                                                     <input type="hidden" id="group_id" name="group_id"
                                                         value="{{ $group->id }}">
