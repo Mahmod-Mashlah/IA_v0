@@ -85,6 +85,14 @@ class FileController extends Controller
             // return redirect()->route('files', compact(['file']))->with('check-in-success ', 'The File is Checked in Successfully');
 
         }
+        else {
+            echo"<br>
+            <h1 style='font-size: 40px;color: red ;text-align: center;vertical-align: middle;'
+            >Unlucky 😅</h1>
+            <br>
+            <h1 style='font-size: 35px;text-align: center;'>
+            This File has been checked-in recently by another User !</h1>";
+    }
     }
 
     public function multi_check_in(Request $request)
