@@ -69,6 +69,7 @@
                                 <tbody>
 
                                     @forelse ($files as $file)
+                                    @if ($file->File->status == 'reserved')
 
                                     <tr>
 
@@ -121,6 +122,7 @@
                                     </tr>
 
                                 </tbody>
+                                @endif
 
                                 @empty
                                         <h3 class="text-border-red alert  text-danger text-center ">
