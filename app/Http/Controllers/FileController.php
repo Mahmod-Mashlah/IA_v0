@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Action;
+use ZipArchive;
 use App\Models\File;
 use App\Models\Group;
+use App\Models\Action;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,19 +47,33 @@ class FileController extends Controller
         $files = File::all()->where('group_id', $request->group_id);
         $group = Group::find($request->group_id);
 
-
-
         return redirect()->back();
         // return view('groups.show-group-files', compact(['files', 'group']));
     }
-    public function downloadfile(Request $request)
+
+    // public function downloadfile(Request $request)
+    // {
+    //     $file = File::where('id', $request->file_id)->sharedLock()->first();
+    //     if ($file) {
+    //         $file_name = $file->name;
+    //         $path = public_path('filles/' . $file_name);
+    //         return response()->download($path);
+    //     }
+    // }
+
+    public function downloadfile(File $file)
     {
-        $file = File::where('id', $request->file_id)->sharedLock()->first();
-        if ($file) {
-            $file_name = $file->name;
-            $path = public_path('filles/' . $file_name);
-            return response()->download($path);
-        }
+        $path = public_path('filles/'.$file->file);
+        // if (! is_file($path)) {
+        //     abort(404);
+        // }
+        $headers = [
+            'Content-Type' => 'multipart/mixed',
+            'Content-Disposition' => 'attachment; filename="' . basename($path) . '"',
+        ];
+
+        return response()->download($path, basename($path), $headers);
+
     }
 
     public function check_in(Request $request)
@@ -84,15 +99,14 @@ class FileController extends Controller
             // $file->status = 'reserved' ;
             // return redirect()->route('files', compact(['file']))->with('check-in-success ', 'The File is Checked in Successfully');
 
-        }
-        else {
-            echo"<br>
+        } else {
+            echo "<br>
             <h1 style='font-size: 40px;color: red ;text-align: center;vertical-align: middle;'
             >Unlucky 😅</h1>
             <br>
             <h1 style='font-size: 35px;text-align: center;'>
             This File has been checked-in recently by another User !</h1>";
-    }
+        }
     }
 
     public function multi_check_in(Request $request)
@@ -100,6 +114,24 @@ class FileController extends Controller
 
         $fileIds = $request->fileIds;
         $files = File::findMany($fileIds);
+
+        $zip = new ZipArchive;
+        $fileName = "check-in-files.zip";
+        if ($zip->open($fileName, ZipArchive::CREATE)) {
+
+            foreach ($files as $file) {
+
+                $nameInZipFile = basename($file);
+
+                $zip->addFile($file, $nameInZipFile);
+            }
+
+            $zip->close();
+            dd($zip);
+        }
+        return response()->download($fileName);
+
+
         foreach ($files as $file) {
             //Logic
             if ($file && $file->status == 'free') {

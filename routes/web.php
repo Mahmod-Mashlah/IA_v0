@@ -56,7 +56,8 @@ Route::middleware('web-auth')->group(function () {
 
     // Download  Files :
 
-    Route::post('downloadfile', [FileController::class, 'downloadfile']);
+    Route::get('file/{file}/download', [FileController::class, 'downloadfile'])->name('download');
+    // Route::post('downloadfile', [FileController::class, 'downloadfile']);// not work
 
     /*_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-*/
 
