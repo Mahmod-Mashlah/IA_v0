@@ -103,11 +103,10 @@
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-black disabled color-palette">
 
-                                                <form action="{{ url('downloadfile') }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="file_id" value="{{ $file->id }}">
-                                                    <button type="submit" class="btn btn-info">download</button>
-                                                </form>
+                                                <a href="{{ route('downloadfile', $file->id) }}"
+                                                    class="btn btn-info">
+                                                    download </a>
+
 
                                             </span>
                                         </td>

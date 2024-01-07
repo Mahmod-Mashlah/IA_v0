@@ -85,54 +85,53 @@
                                         @csrf
                                         @method('Post')
 
-                                    <tr>
+                                        <tr>
 
-                                        @foreach ($files as $file)
-                                    <tr>
+                                            @foreach ($files as $file)
+                                        <tr>
 
-                                        <td> <input type="checkbox"  name="fileIds[]" value="{{ $file->id }}" />
-                                            <b> {{ $file->id }} </b>
-                                        </td>
+                                            <td> <input type="checkbox" name="fileIds[]" value="{{ $file->id }}" />
+                                                <b> {{ $file->id }} </b>
+                                            </td>
 
-                                        <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">{{ $file->name }}</span>
-                                        </td>
-                                        <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-dark  disabled color-palette ">
-                                                {{ $file->status }}</span></td>
+                                            <td class='text-center' style="font-size: 23px;"><span
+                                                    class="badge text-black disabled color-palette">{{ $file->name }}</span>
+                                            </td>
+                                            <td class='text-center' style="font-size: 23px;"><span
+                                                    class="badge text-dark  disabled color-palette ">
+                                                    {{ $file->status }}</span></td>
 
-                                        <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">{{ $file->user_id }}</span>
-                                        </td>
+                                            <td class='text-center' style="font-size: 23px;"><span
+                                                    class="badge text-black disabled color-palette">{{ $file->user_id }}</span>
+                                            </td>
 
-                                        <td class='text-center' style="font-size: 23px;">
-                                            <span class="badge text-black disabled color-palette">
-                                                @if ($file->status == 'free')
-                                                    <a href="{{ route('check-in', $file->id) }}" class="btn btn-warning">
-                                                        check-in
-                                                    </a>
-                                                @else
-                                                    <p class=" text-danger text-center ">reserved</p>
-                                                @endif
-                                            </span>
-                                        </td>
+                                            <td class='text-center' style="font-size: 23px;">
+                                                <span class="badge text-black disabled color-palette">
+                                                    @if ($file->status == 'free')
+                                                        <a href="{{ route('check-in', $file->id) }}"
+                                                            class="btn btn-warning">
+                                                            check-in
+                                                        </a>
+                                                    @else
+                                                        <p class=" text-danger text-center ">reserved</p>
+                                                    @endif
+                                                </span>
+                                            </td>
 
-                                        <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">
-                                                <form id="downloadForm" action="{{ url('downloadfile') }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="file_id" value="{{ $file->id }}">
-                                                    <button type="submit" onclick="submitDownloadForm()" class="btn btn-info">download</button>
-                                                </form>
+                                            <td class='text-center' style="font-size: 23px;"><span
+                                                    class="badge text-black disabled color-palette">
+                                                    <a href="{{ route('downloadfile', $file->id) }}"
+                                                        class="btn btn-info">
+                                                        download </a>
 
-                                            </span>
-                                        </td>
+                                                </span>
+                                            </td>
 
 
-                                    </tr>
-                                    @endforeach
+                                        </tr>
+                                        @endforeach
 
-                                    </tr>{{-- delete tr to show other javascript options --}}
+                                        </tr>{{-- delete tr to show other javascript options --}}
 
                                 </tbody>
 
@@ -142,7 +141,8 @@
                             </table>
                             <br>
 
-                                <button type="submit" class="btn btn-primary col-md-12 " onclick="submitMultiCheckInForm()"> Check in selected Files </button>
+                            <button type="submit" class="btn btn-primary col-md-12 " onclick="submitMultiCheckInForm()">
+                                Check in selected Files </button>
 
                             </form>
                             {{-- end of multi check in Form  --}}
@@ -211,46 +211,45 @@
     {{-- Nested Forms Solve Proplem --}}
     <script>
         function submitMultiCheckInForm() {
-    const multiCheckInForm = document.getElementById('multiCheckInForm');
-    const downloadForm = document.getElementById('downloadForm');
-    const checkInForm = document.getElementById('checkInForm');
+            const multiCheckInForm = document.getElementById('multiCheckInForm');
+            const downloadForm = document.getElementById('downloadForm');
+            const checkInForm = document.getElementById('checkInForm');
 
-    // check if inner forms are valid
-    if (downloadForm.checkValidity() && checkInForm.checkValidity()) {
-        // if inner forms are valid, submit the outer form
-        multiCheckInForm.submit();
-    } else {
-        // if inner forms are not valid, show error messages
-        downloadForm.reportValidity();
-        checkInForm.reportValidity();
-    }
-}
+            // check if inner forms are valid
+            if (downloadForm.checkValidity() && checkInForm.checkValidity()) {
+                // if inner forms are valid, submit the outer form
+                multiCheckInForm.submit();
+            } else {
+                // if inner forms are not valid, show error messages
+                downloadForm.reportValidity();
+                checkInForm.reportValidity();
+            }
+        }
 
-function submitDownloadForm() {
-    const downloadForm = document.getElementById('downloadForm');
+        function submitDownloadForm() {
+            const downloadForm = document.getElementById('downloadForm');
 
-    // check if inner form is valid
-    if (downloadForm.checkValidity()) {
-        // if inner form is valid, submit it (or perform other actions as required)
-        downloadForm.submit();
-    } else {
-        // if inner form is not valid, show error messages
-        downloadForm.reportValidity();
-    }
-}
+            // check if inner form is valid
+            if (downloadForm.checkValidity()) {
+                // if inner form is valid, submit it (or perform other actions as required)
+                downloadForm.submit();
+            } else {
+                // if inner form is not valid, show error messages
+                downloadForm.reportValidity();
+            }
+        }
 
-function submitCheckInForm() {
-    const checkInForm = document.getElementById('checkInForm');
+        function submitCheckInForm() {
+            const checkInForm = document.getElementById('checkInForm');
 
-    // check if inner form is valid
-    if (checkInForm.checkValidity()) {
-        // if inner form is valid, submit it (or perform other actions as required)
-        checkInForm.submit();
-    } else {
-        // if inner form is not valid, show error messages
-        checkInForm.reportValidity();
-    }
-}
+            // check if inner form is valid
+            if (checkInForm.checkValidity()) {
+                // if inner form is valid, submit it (or perform other actions as required)
+                checkInForm.submit();
+            } else {
+                // if inner form is not valid, show error messages
+                checkInForm.reportValidity();
+            }
+        }
     </script>
-
 @endsection

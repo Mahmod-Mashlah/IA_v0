@@ -100,8 +100,6 @@ class FileController extends Controller
         $fileIds = $request->fileIds;
         $files = File::findMany($fileIds);
 
-
-        // dd($fileIds);
         foreach ($files as $file) {
             //Logic
             if ($file && $file->status == 'free') {
@@ -125,7 +123,6 @@ class FileController extends Controller
                <h1 style='font-size: 35px;text-align: center;'>
                This File : <br>".$file->name."<br> is reserved by another User !</h1>";
             }
-
         }
         return "<br>
                <h1 style='font-size: 35px;text-align: center;'>
