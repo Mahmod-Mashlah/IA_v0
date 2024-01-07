@@ -63,11 +63,6 @@
                             <!-- /. Add File Form -->
                             <br>
 
-                            {{-- multi check in Form  --}}
-
-                            <form id="multiCheckInForm" action="{{ route('multi-check-in') }}" method="Post">
-                                @csrf
-                                @method('Post')
 
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
@@ -77,13 +72,18 @@
                                         {{-- <th style="width: 10%">Edit Employee </th> --}}
                                         <th class='text-center' style="width: 7%">Status</th>
                                         <th class='text-center' style="width: 5%">User Id </th>
-                                        <th class='text-center' style="width: 10%">Download</th>
                                         <th class='text-center' style="width: 10%">Check-in / Check-out</th>
+                                        <th class='text-center' style="width: 10%">Download</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
 
+                                    {{-- multi check in Form  --}}
+
+                                    <form id="multiCheckInForm" action="{{ route('multi-check-in') }}" method="Post">
+                                        @csrf
+                                        @method('Post')
 
                                     <tr>
 
@@ -105,17 +105,6 @@
                                                 class="badge text-black disabled color-palette">{{ $file->user_id }}</span>
                                         </td>
 
-
-                                        <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">
-                                                <form id="downloadForm" action="{{ url('downloadfile') }}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="file_id" value="{{ $file->id }}">
-                                                    <button type="submit" onclick="submitDownloadForm()" class="btn btn-info">download</button>
-                                                </form>
-
-                                            </span>
-                                        </td>
                                         <td class='text-center' style="font-size: 23px;">
                                             <span class="badge text-black disabled color-palette">
                                                 @if ($file->status == 'free')
@@ -131,6 +120,18 @@
                                                 @endif
                                             </span>
                                         </td>
+
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-black disabled color-palette">
+                                                <form id="downloadForm" action="{{ url('downloadfile') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="file_id" value="{{ $file->id }}">
+                                                    <button type="submit" onclick="submitDownloadForm()" class="btn btn-info">download</button>
+                                                </form>
+
+                                            </span>
+                                        </td>
+
 
                                     </tr>
                                     @endforeach
