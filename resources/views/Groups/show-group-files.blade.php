@@ -108,13 +108,9 @@
                                         <td class='text-center' style="font-size: 23px;">
                                             <span class="badge text-black disabled color-palette">
                                                 @if ($file->status == 'free')
-                                                    <form id="checkInForm" action="{{ url('check-in') }}" method="POST">
-
-                                                        @csrf
-                                                        <input type="hidden" name="file_id" value="{{ $file->id }}">
-                                                        <button type="submit" onclick="submitCheckInForm()" class="btn btn-warning">check-in</button>
-
-                                                    </form>
+                                                    <a href="{{ route('check-in', $file->id) }}" class="btn btn-warning">
+                                                        check-in
+                                                    </a>
                                                 @else
                                                     <p class=" text-danger text-center ">reserved</p>
                                                 @endif

@@ -78,7 +78,6 @@ class FileController extends Controller
             ]);
 
             $path = public_path('filles/' . $file_name);
-            // dd($file) ;
 
             return response()->download($path);
             // $file->status = 'reserved' ;
@@ -180,7 +179,6 @@ class FileController extends Controller
 
         return view('groups.show-group-files', compact(['files', 'group']));
     }
-
 
     public function destroy(File $file)
     {
