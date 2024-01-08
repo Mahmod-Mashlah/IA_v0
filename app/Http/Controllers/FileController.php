@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\Group;
+use App\Models\Action;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreFileRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UpdateFileRequest;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class FileController extends Controller
 {
@@ -18,168 +18,167 @@ class FileController extends Controller
         return view('files.index', compact(['files']));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $files = File::all();
-        return view('files.add',compact([
-            'files',
+        $group = Group::find($request->group_id);
+        return view('files.add', compact([
+            'files', 'group',
         ]));
     }
 
-    // public function store(StoreFileRequest $request)
-    // {
-    //     $originalFileName = $request->file->getClientOriginalName();
-    //     $extension = $request->file->getClientOriginalExtension();
-    //     $newFileName = $originalFileName . '.' . $extension;
 
-    //     $request->file->storeAs('public/files', $newFileName);
+    public function upload_file(Request $request)
+    {
+        // dd(1);
+        $file_extension = $request->file->getClientOriginalName();
+        $filename = $file_extension;
 
+        $request->file->move('filles', $filename);
 
-    //     $file = new File();
-
-    //     $validatedData = $request->validate([
-
-    //         // 'name'           => 'required',
-    //         // 'status'           => 'required',
-    //         // 'user_id'           => 'required',
-    //         // 'group_id'           => 'required',
-
-    //         'file' => 'required|file|max:2048',
-
-
-    //     ]);
-
-    //     $file = File::create([
-
-    //         'name'           => $newFileName,
-    //         'status'           => 'free',
-    //         'user_id'           => auth()->user()->id,
-    //         'group_id'           => 1,
-    //         'file'           => $validatedData['file'],
-
-    //     ]);
-
-    //     $file->save();
-
-    //     Alert::success('Done !', 'a new File has been created Successfully');
-
-    //     return redirect()->route('files',compact(['file','validatedData']))->with('success', 'A new File has created successfully!');
-
-
-
-    //     // ______________________________________________________________________________
-    //     // ______________________________________________________________________________
-    //     // $request->validate([
-    //     //     'file' => 'required|file|max:2048',
-    //     // ]);
-
-    //     // $originalFileName = $request->file->getClientOriginalName();
-    //     // $extension = $request->file->getClientOriginalExtension();
-    //     // $newFileName = $originalFileName . '.' . $extension;
-
-
-    //     // $request->file->storeAs('public/files', $newFileName);
-
-    //     // $file = new File;
-    //     // $file->name = $originalFileName;
-    //     // $file->path = 'storage/files/' . $newFileName;
-    //     // $file->user_id = auth()->user()->id;
-    //     // $file->group_id = 1; // Replace with the correct group_id
-    //     // $file->status = 'active';
-    //     // $file->save();
-
-    //     // return redirect()->route('files.index');
-    // }
-
-    public function store(StoreFileRequest $request)
-{
-    $fileModel = new File;
-
-    $name = $request->file('file')->getClientOriginalName();
-    $path = $request->file('file')->storeAs('uploads', $name, 'public');
-
-    $fileModel->name = $name;
-    $fileModel->status = 'free';
-    $fileModel->user_id = auth()->user()->id;
-    $fileModel->group_id = $request->group_id;
-    $fileModel->file = '/storage/' . $path;
-
-    $fileModel->save();
-
-     return redirect()->route('files')
-        ->with('success', 'File has been uploaded.')
-        ->with('file', $fileModel);
-
-
-}
-    public function store0(StoreFileRequest $request)
-{
-    if ($request->hasFile('file')) {
-        $file = $request->file('file');
-
-        $originalFileName = $request->file->getClientOriginalName();
-        $extension = $request->file->getClientOriginalExtension();
-        $newFileName = $originalFileName . '.' . $extension;
-
-        // $path = $file->storeAs('storage/files', $newFileName, 'local');
-        $request->file->move('assets/files', $originalFileName);
-
-        $fileDetails = new File([
-            'name' => $originalFileName,
-            'file' => $file,
+        File::create([
+            'name' => $filename,
             'status' => 'free',
+            'group_id' => $request->group_id,
+            'file' => 'public/filles/' . $filename,
             'user_id' => auth()->user()->id,
-            'group_id' => '1',//$request->input('group_id'),
         ]);
 
-        $fileDetails->save();
+        $files = File::all()->where('group_id', $request->group_id);
+        $group = Group::find($request->group_id);
 
-        return redirect()->route('files')->with('success', 'File has been uploaded successfully');
+
+
+        return redirect()->back();
+        // return view('groups.show-group-files', compact(['files', 'group']));
     }
-
-    return redirect()->route('files')->with('error', 'No file selected');
-}
-
-
-    public function download(Request $request)
+    public function downloadfile(Request $request)
     {
-
-
-        $file = File::find($request->file_id);
-
-    if (auth()->user()->id !== $file->user_id) {
-        abort(403);
-    }
-    $file->status = 'reserved';
-
-    return response()->download(storage_path('app/public/uploads' . $file->file));
-
-        // $file = public_path('files/project1.docx');
-        // return response()->download($file);
-
-
-        // $file = File::findOrFail($id);
-
-        // return Storage::download('assets/files/'.$file->file, $file->name);
-
-        // return response()->download(public_path('assets/files/'.$file));
-        // return Storage::download('assets/files/'.$id);
-
+        $file = File::where('id', $request->file_id)->sharedLock()->first();
+        if ($file) {
+            $file_name = $file->name;
+            $path = public_path('filles/' . $file_name);
+            return response()->download($path);
+        }
     }
 
-    public function getdownload($filename)
+    public function check_in(Request $request)
     {
-        // Check if the file exists in the storage/app/public/uploads directory
-        if (Storage::disk('public')->exists('uploads' . $filename)) {
-            // Return the file as a download response
-            return Storage::disk('public')->download('uploads' . $filename);
+        $file = File::where('id', $request->file_id)->sharedLock()->first();
+        if ($file && $file->status == 'free') {
+            $file_name = $file->name;
+            $file->status = 'reserved';
+            $file->save();
+
+            Action::factory()->create([
+
+                'user_id' => auth()->user()->id,
+                'file_id' => $file->id,
+                'action' => 'check-in',
+
+            ]);
+
+            $path = public_path('filles/' . $file_name);
+
+            return response()->download($path);
+            // $file->status = 'reserved' ;
+            // return redirect()->route('files', compact(['file']))->with('check-in-success ', 'The File is Checked in Successfully');
+
         }
         else {
-            // Return a 404 error if the file does not exist
-            return abort(404);
-        }
+            echo"<br>
+            <h1 style='font-size: 40px;color: red ;text-align: center;vertical-align: middle;'
+            >Unlucky 😅</h1>
+            <br>
+            <h1 style='font-size: 35px;text-align: center;'>
+            This File has been checked-in recently by another User !</h1>";
+    }
     }
 
+    public function multi_check_in(Request $request)
+    {
+
+        $fileIds = $request->fileIds;
+        $files = File::findMany($fileIds);
+
+        foreach ($files as $file) {
+            //Logic
+            if ($file && $file->status == 'free') {
+                $file_name = $file->name;
+                $file->status = 'reserved';
+                $file->save();
+
+                Action::factory()->create([
+
+                    'user_id' => auth()->user()->id,
+                    'file_id' => $file->id,
+                    'action' => 'check-in',
+
+                ]);
+            }
+            else {
+               return "<br>
+               <h1 style='font-size: 40px;color: red ;text-align: center;vertical-align: middle;'
+               >Error 😅</h1>
+               <br>
+               <h1 style='font-size: 35px;text-align: center;'>
+               This File : <br>".$file->name."<br> is reserved by another User !</h1>";
+            }
+        }
+        return "<br>
+               <h1 style='font-size: 35px;text-align: center;'>
+               All Files reserved";
+        // dd($files);
+    }
+
+    public function checked_in_files()
+    {
+        $files = Action::all()->where('action', 'check-in')
+            ->where('user_id', auth()->user()->id);
+        return view('files.checked-in-files', compact(['files']));
+    }
+
+    public function check_out_form(Request $request)
+    {
+        $file = File::find($request->file_id);
+
+        return view('files.check-out-form', compact([
+            'file'
+        ]));
+    }
+
+    public function check_out(Request $request)
+    {
+
+        $oldFile = File::find($request->file_id);
+
+        $file_extension = $request->file->getClientOriginalName();
+        $filename = $file_extension;
+
+        $request->file->move('filles', $filename);
+
+        $oldFile->update([
+            'name' => $filename,
+            'status' => 'free',
+            'file' => 'public/filles/' . $filename,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        Action::factory()->create([
+
+            'user_id' => auth()->user()->id,
+            'file_id' => $oldFile->id,
+            'action' => 'check-out',
+
+        ]);
+
+
+        $files = File::all()->where('group_id', $oldFile->group_id);
+        $group = Group::find($oldFile->group_id);
+
+        return redirect()->route('checked-in-files')->with(compact('files', 'group'));
+
+    }
 
     public function destroy(File $file)
     {
@@ -188,5 +187,4 @@ class FileController extends Controller
 
         return redirect()->route('files.index');
     }
-
 }

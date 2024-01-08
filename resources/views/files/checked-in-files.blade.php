@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Groups || Index
+    Files || Checked in Files
 @endsection {{-- or @stop --}}
 
 @section('css')
@@ -24,11 +24,11 @@
 @endsection
 
 @section('son1')
-    Groups
+    Files
 @endsection
 
 @section('son2')
-    Groups
+    Checked in Files
 @endsection
 
 
@@ -40,108 +40,101 @@
                 <div class="col-12">
                     {{-- <div class="row mb-2">
                     <div class="col-sm-6">
-                      <h1>Buttons</h1>
+                        <h1>Buttons</h1>
                     </div>
-                </div>  --}}
+                </div> --}}
                     <div class="card">
                         <div class="card-header bg-blue">
-                            <h1 class="card-title  text-white">These are all Groups in this App
+                            <h1 class="card-title  text-white">These are all Checked in Files you made
                             </h1>
                         </div>
 
                         <!-- /.card-header -->
                         <div class="card-body">
+
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 1%"><b>#</b></th>
-                                        <th class='text-center'style="width: 10%">Name </th>
-                                        {{-- <th style="width: 10%" >Edit Employee </th> --}}
-                                        <th class='text-center'style="width: 10%">Admin Id</th>
-                                        <th class='text-center'style="width: 10%">Go To Files</th>
-                                        @if (auth()->user()->id == 1)
-                                            <th class='text-center'style="width: 10%">Users Permissions</th>
-                                        @endif
+                                        <th style="width: 5%"><b>Action Id</b></th>
+                                        <th class='text-center' style="width: 10%">Name </th>
+                                        {{-- <th style="width: 10%">Edit Employee </th> --}}
+                                        <th class='text-center' style="width: 7%">Status</th>
+                                        <th class='text-center' style="width: 5%">File Id</th>
+                                        <th class='text-center' style="width: 5%">Group Id</th>
+                                        <th class='text-center' style="width: 7%">Download</th>
+                                        <th class='text-center' style="width: 7%">Check-out</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
 
+                                    @forelse ($files as $file)
+                                    @if ($file->File->status == 'reserved')
+
                                     <tr>
 
-                                        @foreach ($groups as $group)
                                     <tr>
-                                        <td> <b> {{ $group->id }} </b></td>
+                                        <td> <b> {{ $file->id }} </b></td>
 
                                         <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">{{ $group->name }}</span>
+                                                class="badge text-black disabled color-palette">{{ $file->File->name }}</span>
                                         </td>
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-dark  disabled color-palette ">
-                                                {{-- <a href={{ url( $group->email , []) }} target="_plank"></a> --}}
-                                                {{ $group->admin_id }}</span></td>
-                                        <td class='text-center' style="font-size: 23px;">
-                                            <span class="badge bg-white disabled color-palette">
-                                                <form action="groupfiles" method="Get">
+                                                {{ $file->File->status }}</span></td>
+
+
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-black disabled color-palette">{{ $file->File->id }}</span>
+                                        </td>
+
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-black disabled color-palette">{{ $file->File->group_id }}</span>
+                                        </td>
+
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-black disabled color-palette">
+
+                                                <form action="{{ url('downloadfile') }}" method="POST">
                                                     @csrf
-                                                    @method('Get')
-                                                    <button type="submit" class="btn btn-primary">View Files</button>
-                                                    <input type="hidden" id="group_id" name="group_id"
-                                                        value="{{ $group->id }}">
+                                                    <input type="hidden" name="file_id" value="{{ $file->id }}">
+                                                    <button type="submit" class="btn btn-info">download</button>
+                                                </form>
+
+                                            </span>
+                                        </td>
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-black disabled color-palette">
+
+                                                <form action="{{ url('check-out-form') }}" method="Get">
+
+                                                    @csrf
+                                                    <input type="hidden" name="file_id" id="file_id" value="{{ $file->File->id }}">
+                                                    <button type="submit" class="btn btn-danger  ">check-out</button>
+
                                                 </form>
                                             </span>
                                         </td>
 
-                                        @if (auth()->user()->id == 1)
-                                            <td class='text-center' style="font-size: 23px;">
-                                                <span class="badge bg-white disabled color-palette">
-
-                                                    <a href="{{ url('groups/edit-permissions', [$group->id]) }}"
-                                                        class="btn btn-warning" type="button">edit</a>
-                                                </span>
-
-
-                                            </td>
-                                        @endif
-
-                                    </tr>
-                                    @endforeach
-
-
-                                    {{-- ******************************************************************************** --}}
-                                    {{-- <form method="POST" action="{{ route('group.role.update', $group->id) }}">
-                            @csrf
-                            @method('POST') --}}
-
-                                    <form action="{{ url('/groups/add', []) }}" method="POST">
-                                        @csrf
-
-                                        <!-- /.card-body -->
-
-                                        <a href="/groups/add" class="btn btn-success" type="button">Add Group</a>
-                                        </span>
-
-                                    </form>
-
-                                    {{-- ******************************************************************************** --}}
-
                                     </tr>
 
+
+                                    </tr>
 
                                 </tbody>
-                                {{-- <tbody>
-                        @foreach ($groups as $group)
-                        <tr>
-                            <td>{{ $group->name }}</td>
-                            <td>{{ $group->email }}</td>
-                            <!-- Add more table cells with group data if needed -->
-                        </tr>
-                        @endforeach
-                    </tbody> --}}
+                                @endif
+
+                                @empty
+                                        <h3 class="text-border-red alert  text-danger text-center ">
+                                            There's no Checked-in Files  yet
+                                        </h3>
+                                            @endforelse
+
                                 <tfoot>
 
                                 </tfoot>
                             </table>
+
                         </div>
                         <!-- /.card-body -->
                     </div>

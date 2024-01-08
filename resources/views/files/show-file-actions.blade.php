@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Groups || Index
+    Actions For {{ $file->name }}
 @endsection {{-- or @stop --}}
 
 @section('css')
@@ -24,13 +24,12 @@
 @endsection
 
 @section('son1')
-    Groups
+    Files
 @endsection
 
 @section('son2')
-    Groups
+    Actions For <b class="text-yellow">{{ $file->name }} </b>
 @endsection
-
 
 @section('content')
     <!-- Main content -->
@@ -40,110 +39,78 @@
                 <div class="col-12">
                     {{-- <div class="row mb-2">
                     <div class="col-sm-6">
-                      <h1>Buttons</h1>
+                        <h1>Buttons</h1>
                     </div>
-                </div>  --}}
+                </div> --}}
                     <div class="card">
-                        <div class="card-header bg-blue">
-                            <h1 class="card-title  text-white">These are all Groups in this App
+                        <div class="card-header header-text-center bg-blue">
+                            <h1 class="card-title text-white">All Actions For File : <b
+                                    class="text-yellow">{{ $file->name }} </b>
                             </h1>
                         </div>
 
                         <!-- /.card-header -->
                         <div class="card-body">
+
+                            <br>
+
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th style="width: 1%"><b>#</b></th>
-                                        <th class='text-center'style="width: 10%">Name </th>
-                                        {{-- <th style="width: 10%" >Edit Employee </th> --}}
-                                        <th class='text-center'style="width: 10%">Admin Id</th>
-                                        <th class='text-center'style="width: 10%">Go To Files</th>
-                                        @if (auth()->user()->id == 1)
-                                            <th class='text-center'style="width: 10%">Users Permissions</th>
-                                        @endif
+                                        <th class='text-center' style="width: 5%">User Id </th>
+                                        <th class='text-center' style="width: 5%">User Name </th>
+                                        <th class='text-center' style="width: 7%">Action</th>
+                                        <th class='text-center' style="width: 10%">created At </th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
 
+
                                     <tr>
 
-                                        @foreach ($groups as $group)
+                                        @foreach ($file_Actions as $action)
                                     <tr>
-                                        <td> <b> {{ $group->id }} </b></td>
+
+                                        <td>
+                                            <b> {{ $action->id }} </b>
+                                        </td>
+
+                                        <td class='text-center' style="font-size: 18px;">
+                                            <b> {{ $action->user_id }} </b>
+                                        </td>
 
                                         <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">{{ $group->name }}</span>
+                                                class="badge text-black disabled color-palette">
+                                                {{ $action->User->name }}</span>
+                                        </td>
+
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-black disabled color-palette">{{ $action->action }}</span>
                                         </td>
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-dark  disabled color-palette ">
-                                                {{-- <a href={{ url( $group->email , []) }} target="_plank"></a> --}}
-                                                {{ $group->admin_id }}</span></td>
-                                        <td class='text-center' style="font-size: 23px;">
-                                            <span class="badge bg-white disabled color-palette">
-                                                <form action="groupfiles" method="Get">
-                                                    @csrf
-                                                    @method('Get')
-                                                    <button type="submit" class="btn btn-primary">View Files</button>
-                                                    <input type="hidden" id="group_id" name="group_id"
-                                                        value="{{ $group->id }}">
-                                                </form>
-                                            </span>
-                                        </td>
-
-                                        @if (auth()->user()->id == 1)
-                                            <td class='text-center' style="font-size: 23px;">
-                                                <span class="badge bg-white disabled color-palette">
-
-                                                    <a href="{{ url('groups/edit-permissions', [$group->id]) }}"
-                                                        class="btn btn-warning" type="button">edit</a>
-                                                </span>
-
-
-                                            </td>
-                                        @endif
+                                                {{ Carbon\Carbon::parse($action->created_at)->format('j/n/Y ,g:i a') }}
+                                                </span></td>
 
                                     </tr>
                                     @endforeach
 
-
-                                    {{-- ******************************************************************************** --}}
-                                    {{-- <form method="POST" action="{{ route('group.role.update', $group->id) }}">
-                            @csrf
-                            @method('POST') --}}
-
-                                    <form action="{{ url('/groups/add', []) }}" method="POST">
-                                        @csrf
-
-                                        <!-- /.card-body -->
-
-                                        <a href="/groups/add" class="btn btn-success" type="button">Add Group</a>
-                                        </span>
-
-                                    </form>
-
-                                    {{-- ******************************************************************************** --}}
-
-                                    </tr>
-
+                                    </tr>{{-- delete tr to show other javascript options --}}
 
                                 </tbody>
-                                {{-- <tbody>
-                        @foreach ($groups as $group)
-                        <tr>
-                            <td>{{ $group->name }}</td>
-                            <td>{{ $group->email }}</td>
-                            <!-- Add more table cells with group data if needed -->
-                        </tr>
-                        @endforeach
-                    </tbody> --}}
+
                                 <tfoot>
 
                                 </tfoot>
                             </table>
+                            <br>
+
+
                         </div>
                         <!-- /.card-body -->
+
                     </div>
                     <!-- /.card -->
 
@@ -200,5 +167,4 @@
                 "responsive": true,
             });
         });
-    </script>
-@endsection
+    @endsection

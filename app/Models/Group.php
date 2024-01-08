@@ -27,10 +27,10 @@ class Group extends Model
 
     public function Users()
     {
-        return $this->belongsToMany(User::class, 'groups_users');
+        return $this->belongsToMany(User::class, 'group_user')->withPivot ('created_at','updated_at');
     }
 
-    public function File()
+    public function Files()
     {
         return $this->hasMany(File::class);
     }

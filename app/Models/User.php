@@ -50,6 +50,6 @@ class User extends Authenticatable
 
     public function Groups()
     {
-        return $this->belongsToMany(Group::class, 'groups_users');
+        return $this->belongsToMany(Group::class, 'group_user')->withPivot ('created_at','updated_at');
     }
 }

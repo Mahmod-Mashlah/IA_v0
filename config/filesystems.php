@@ -56,6 +56,13 @@ return [
             'throw' => false,
         ],
 
+        'filles' => [
+            'driver' => 'local',
+            'root' => base_path().'public/filles',
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

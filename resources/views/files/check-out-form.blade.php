@@ -30,7 +30,7 @@
 @endsection
 
 @section('son2')
-    Add New File
+    Check out For a File
 @endsection
 
 
@@ -43,16 +43,17 @@
                 <div class="col d-flex justify-content-center">
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Add a New File in <b class="text-yellow">{{ $group->name }}</b></h3>
+                                <h3 class="card-title">Check out For the File : <b class="text-yellow">{{ $file->name }}</b>
+                                </h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
 
-                            <form method="POST" action="{{ url('/files/add') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('check-out') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('Post')
                                 <div class="card-body">
@@ -65,23 +66,22 @@
                                         <input id="group_id" class="form-control bg- light" type="text" name="group_id"
                                             required /> --}}
 
-                                            <input type="hidden" id="group_id" name="group_id"
-                                            value="{{ $group->id }}">
+                                        <input type="hidden" id="file_id" name="file_id" value="{{ $file->id }}">
 
-                                        <label for="file">file</label>
+                                        <label for="file">File after update :</label>
                                         <input id="file" class="form-control bg- light" type="file" name="file"
                                             required />
 
                                     </div>
-                                                                      </div>
-                                    <!-- /.card-body -->
-                                    <br>
-                                    <div class="card-footer">
-                                        <button type="submit"
-                                            class="btn btn-primary col d-flex justify-content-center">Create</button>
+                                </div>
+                                <!-- /.card-body -->
+                                <br>
+                                <div class="card-footer">
+                                    <button type="submit"
+                                        class="btn btn-primary col d-flex justify-content-center">Let's Check-out</button>
 
 
-                                    </div>
+                                </div>
                             </form>
                         </div>
                         <!-- /.card -->

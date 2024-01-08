@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Groups || Index
+    All Users
 @endsection {{-- or @stop --}}
 
 @section('css')
@@ -24,11 +24,11 @@
 @endsection
 
 @section('son1')
-    Groups
+    Users
 @endsection
 
 @section('son2')
-    Groups
+    Users Index
 @endsection
 
 
@@ -40,12 +40,12 @@
                 <div class="col-12">
                     {{-- <div class="row mb-2">
                     <div class="col-sm-6">
-                      <h1>Buttons</h1>
+                        <h1>Buttons</h1>
                     </div>
-                </div>  --}}
+                </div> --}}
                     <div class="card">
                         <div class="card-header bg-blue">
-                            <h1 class="card-title  text-white">These are all Groups in this App
+                            <h1 class="card-title  text-white">These are all Users in this App
                             </h1>
                         </div>
 
@@ -55,13 +55,9 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 1%"><b>#</b></th>
-                                        <th class='text-center'style="width: 10%">Name </th>
-                                        {{-- <th style="width: 10%" >Edit Employee </th> --}}
-                                        <th class='text-center'style="width: 10%">Admin Id</th>
-                                        <th class='text-center'style="width: 10%">Go To Files</th>
-                                        @if (auth()->user()->id == 1)
-                                            <th class='text-center'style="width: 10%">Users Permissions</th>
-                                        @endif
+                                        <th class='text-center' style="width: 10%">Name </th>
+                                        <th class='text-center' style="width: 7%">E-mail</th>
+                                        <th class='text-center' style="width: 5%">Show Actions</th>
 
                                     </tr>
                                 </thead>
@@ -69,75 +65,36 @@
 
                                     <tr>
 
-                                        @foreach ($groups as $group)
+                                        @foreach ($users as $user)
                                     <tr>
-                                        <td> <b> {{ $group->id }} </b></td>
+                                        <td> <b> {{ $user->id }} </b></td>
 
                                         <td class='text-center' style="font-size: 23px;"><span
-                                                class="badge text-black disabled color-palette">{{ $group->name }}</span>
+                                                class="badge text-black disabled color-palette">{{ $user->name }}</span>
                                         </td>
                                         <td class='text-center' style="font-size: 23px;"><span
                                                 class="badge text-dark  disabled color-palette ">
-                                                {{-- <a href={{ url( $group->email , []) }} target="_plank"></a> --}}
-                                                {{ $group->admin_id }}</span></td>
-                                        <td class='text-center' style="font-size: 23px;">
-                                            <span class="badge bg-white disabled color-palette">
-                                                <form action="groupfiles" method="Get">
+                                                {{ $user->email }}</span></td>
+
+                                        <td class='text-center' style="font-size: 23px;"><span
+                                                class="badge text-black disabled color-palette">
+
+                                                <form action="{{ url('user-checks-in-report') }}" method="Get">
                                                     @csrf
-                                                    @method('Get')
-                                                    <button type="submit" class="btn btn-primary">View Files</button>
-                                                    <input type="hidden" id="group_id" name="group_id"
-                                                        value="{{ $group->id }}">
+                                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                                    <button type="submit" class="btn btn-info">show</button>
                                                 </form>
+
                                             </span>
                                         </td>
-
-                                        @if (auth()->user()->id == 1)
-                                            <td class='text-center' style="font-size: 23px;">
-                                                <span class="badge bg-white disabled color-palette">
-
-                                                    <a href="{{ url('groups/edit-permissions', [$group->id]) }}"
-                                                        class="btn btn-warning" type="button">edit</a>
-                                                </span>
-
-
-                                            </td>
-                                        @endif
 
                                     </tr>
                                     @endforeach
 
-
-                                    {{-- ******************************************************************************** --}}
-                                    {{-- <form method="POST" action="{{ route('group.role.update', $group->id) }}">
-                            @csrf
-                            @method('POST') --}}
-
-                                    <form action="{{ url('/groups/add', []) }}" method="POST">
-                                        @csrf
-
-                                        <!-- /.card-body -->
-
-                                        <a href="/groups/add" class="btn btn-success" type="button">Add Group</a>
-                                        </span>
-
-                                    </form>
-
-                                    {{-- ******************************************************************************** --}}
-
                                     </tr>
 
-
                                 </tbody>
-                                {{-- <tbody>
-                        @foreach ($groups as $group)
-                        <tr>
-                            <td>{{ $group->name }}</td>
-                            <td>{{ $group->email }}</td>
-                            <!-- Add more table cells with group data if needed -->
-                        </tr>
-                        @endforeach
-                    </tbody> --}}
+
                                 <tfoot>
 
                                 </tfoot>
