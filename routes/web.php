@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\LoggingController;
 use App\Http\Controllers\WebAuthController;
 
 /*_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-*/
@@ -103,5 +104,9 @@ Route::middleware('web-auth')->group(function () {
 
     Route::get('/file-checks-in-report', [ActionController::class, 'file_checks_in_report'])->name('file-checks-in-report');
 
+    // Logging :
+
+
+    Route::get('logging', [LoggingController::class, 'index'])->name('logging');
 
 });

@@ -5,7 +5,13 @@
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 
-
+            @if (auth()->user()->id == 1)
+            <li class="nav-item">
+                <a href="{{ url('logging', []) }}" class="nav-link ">
+                    <p class="text-info">Logging History</p>
+                </a>
+            </li>
+            @endif
 
     </ul>
 
