@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Action;
 use App\Models\File;
 use App\Models\Group;
+use App\Models\Action;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
@@ -133,6 +134,20 @@ class FileController extends Controller
     {
         $files = Action::all()->where('action', 'check-in')
             ->where('user_id', auth()->user()->id);
+
+            $files_ids = DB::table('actions')
+            ->select( DB::raw('MAX(id) as id'))
+            ->where('action','=', 'check-in')
+            ->where('user_id', auth()->user()->id)
+            ->groupBy('file_id')
+            ->get();
+
+            // dd($files_ids);
+
+            $fileIds = $files_ids->pluck('id')->toArray();
+            $files = Action::findMany($fileIds);
+            // $files = File::whereIn('id', $fileIds)->get();
+
         return view('files.checked-in-files', compact(['files']));
     }
 
@@ -174,8 +189,10 @@ class FileController extends Controller
         $files = File::all()->where('group_id', $oldFile->group_id);
         $group = Group::find($oldFile->group_id);
 
-        return view('groups.show-group-files', compact(['files', 'group']));
+        return redirect()->route('checked-in-files')->with(compact('files', 'group'));
+
     }
+
 
     public function destroy(File $file)
     {
